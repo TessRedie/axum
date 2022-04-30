@@ -19,11 +19,13 @@ client = pymongo.MongoClient('mongodb://localhost:27017/')
 
 
 db = client["streamlipro"]
-mycollection = db["iris"]
+mycollection = db.iris.find({})
 
-one_record = mycollection.find_one()
-st.write(one_record)
-all_records = mycollection.find()
-st.write(all_records)
-for row in all_records:
+
+
+#one_record = mycollection.find_one()
+#st.write(one_record)
+#all_records = mycollection.find()
+st.write(mycollection)
+for row in mycollection:
     st.write(row)
