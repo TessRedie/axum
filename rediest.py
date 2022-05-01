@@ -8,7 +8,7 @@ import pandas as pd
 
 import streamlit as st
 import pymongo
-from pymongo import Connection
+from pymongo import MongoClient
 
 #Connect to the server MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017/')
