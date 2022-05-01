@@ -12,6 +12,7 @@ from pandas import DataFrame
 from PIL import Image
 import json
 from pandas.io.json import json_normalize
+import certifi
 
 from sklearn import datasets
 
