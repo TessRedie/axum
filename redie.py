@@ -78,10 +78,12 @@ MONGODB_DATABASES = {
     },
 }
 
-client = pymongo.MongoClient('mongodb://localhost:27017/')
+#client = pymongo.MongoClient('mongodb://localhost:27017/')
+client=pymongo.MongoClient()
+client = MongoClient("mongodb+srv://localhost:27017/'@cluster0.t4iwt.mongodb.net/testdb?retryWrites=true&w=majority",tlsCAFile=certifi.where())
+db=client["streamlipro"]
 
-db = client["streamlipro"]
-
+#db = client["streamlipro"]
 #from sklearn.datasets import WineQT
 
 header = st.container()
@@ -132,12 +134,13 @@ with dataset:
         #data, dolphins
         #path
         
-        mycollection = db['dolphins']
-        st.write(mycollection)
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
-        
-        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+       
+        collection=db["dolphins"]
+        cursor = collection.find()
+        entries=list(cursor)
+        entries[:]
+                
+        data = pd.DataFrame(entries, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
          #data type as float
         data['dimension_1_mm']  = pd.to_numeric(data.dimension_1_mm, errors='coerce')
         data['dimension_2_mm']  = pd.to_numeric(data.dimension_2_mm, errors='coerce')
