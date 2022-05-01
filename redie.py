@@ -72,17 +72,10 @@ from sklearn.preprocessing import FunctionTransformer
 import pymongo
 from pymongo import MongoClient
 
-MONGODB_DATABASES = {
-    "default": {
-        "name": 'api',
-        "host": 'mongo',
-       "port": 27017
-    },
-}
 
 #client = pymongo.MongoClient('mongodb://localhost:27017/')
 client=pymongo.MongoClient()
-client = MongoClient("mongodb+srv://localhost:27017/'@cluster0.t4iwt.mongodb.net/testdb?retryWrites=true&w=majority",tlsCAFile=certifi.where())
+client = MongoClient("mongodb+srv://localhost:27017/')
 db=client["streamlipro"]
 
 #db = client["streamlipro"]
