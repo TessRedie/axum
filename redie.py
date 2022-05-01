@@ -118,7 +118,7 @@ with header:
 with dataset:    
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
-        st.image(r"/home/tess/Documents/python_projects/streamlit_app/images/doplphin.png", width=None)
+        #st.image(r"/home/tess/Documents/python_projects/streamlit_app/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         #data, dolphins
         #path
