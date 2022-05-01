@@ -13,7 +13,7 @@ from PIL import Image
 import json
 from pandas.io.json import json_normalize
 import certifi
-import dnspython as dns
+import dns
 from dns import resolver 
 
 from sklearn import datasets
