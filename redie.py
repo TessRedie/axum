@@ -126,6 +126,7 @@ with dataset:
         mycollection = db['dolphins']
         st.write(mycollection)
         all_records = mycollection.find()
+        st.write(all_records)
         list_cursor = list(all_records)
         data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
 
