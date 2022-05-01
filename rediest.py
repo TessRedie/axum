@@ -27,5 +27,3 @@ mycollection = db.iris.find({})
 #st.write(one_record)
 #all_records = mycollection.find()
 st.write(mycollection)
-for row in mycollection:
-    st.write(row)
