@@ -4,12 +4,10 @@ from itertools import count
 from math import log2
 from multiprocessing import Pipe
 from telnetlib import SB
-from tkinter import Image, Label, Scale
 from typing import Container, Text
 from xml.etree.ElementInclude import include
 import streamlit as st
 import pandas as pd
-from tkinter import *
 from PIL import Image
 
 from sklearn import datasets
