@@ -124,7 +124,7 @@ with dataset:
         #data, dolphins
         #path
         
-        db=connection["streamlipro"]
+        
         collection=db["dolphins"]
         cursor = collection.find()
         entries=list(cursor)
