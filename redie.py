@@ -14,6 +14,7 @@ import json
 from pandas.io.json import json_normalize
 import certifi
 import dnspython as dns
+from dns import resolver 
 
 from sklearn import datasets
 
