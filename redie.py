@@ -8,6 +8,7 @@ from typing import Container, Text
 from xml.etree.ElementInclude import include
 import streamlit as st
 import pandas as pd
+from pandas import DataFrame
 from PIL import Image
 
 from sklearn import datasets
@@ -123,9 +124,13 @@ with dataset:
         #data, dolphins
         #path
         
-        all_records = db.dolphins.find({})
-        list_cursor = list(all_records)
-        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        db=connection["streamlipro"]
+        collection=db["dolphins"]
+        cursor = collection.find()
+        entries=list(cursor)
+        entries[:]
+                
+        data = pd.DataFrame(entries, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
          #data type as float
         data['dimension_1_mm']  = pd.to_numeric(data.dimension_1_mm, errors='coerce')
         data['dimension_2_mm']  = pd.to_numeric(data.dimension_2_mm, errors='coerce')
