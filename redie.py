@@ -77,7 +77,7 @@ client = init_connection()
 
 #client = pymongo.MongoClient('mongodb://localhost:27017/')
 
-#db = client["streamlipro"]
+db = client["streamlipro"]
 
 #from sklearn.datasets import WineQT
 
@@ -129,14 +129,12 @@ with dataset:
         #data, dolphins
         #path
         
-        def get_data():
-            client["streamlipro"]
-            mycollection = db['dolphins']
-            items = db.mycollection.find()
-            items = list(items)  # make hashable for st.experimental_memo
-            return items
-        items = get_data()
-        data = pd.DataFrame(items, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        mycollection = db['iris']
+        st.write(mycollection)
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+        
+        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
          #data type as float
         data['dimension_1_mm']  = pd.to_numeric(data.dimension_1_mm, errors='coerce')
         data['dimension_2_mm']  = pd.to_numeric(data.dimension_2_mm, errors='coerce')
