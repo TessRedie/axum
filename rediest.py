@@ -11,7 +11,7 @@ import pymongo
 from pymongo import MongoClient
 
 #Connect to the server MongoDB
-client = pymongo.MongoClient('mongodb://localhost:27017/')
+#client = pymongo.MongoClient('mongodb://localhost:27017/')
 
 client = MongoClient()
 db = client['db']
