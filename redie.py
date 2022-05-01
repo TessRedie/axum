@@ -135,8 +135,7 @@ with dataset:
             items = list(items)  # make hashable for st.experimental_memo
             return items
         items = get_data()
-        for item in items:
-                st.write(f"{item}:")
+        st.write(items)
         # Print results.    
          
         #data = pd.DataFrame(entries, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
