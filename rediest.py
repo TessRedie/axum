@@ -22,5 +22,6 @@ db = client["streamlipro"]
 mycollection = db['iris']
 st.write(mycollection)
 all_records = mycollection.find()
-for row in all_records:
-    st.write(row)
+
+list_cursor = list(all_records)
+st.write(list_cursor)
