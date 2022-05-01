@@ -11,6 +11,7 @@ import pandas as pd
 from pandas import DataFrame
 from PIL import Image
 import json
+from pandas.io.json import json_normalize
 
 from sklearn import datasets
 
