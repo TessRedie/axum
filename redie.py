@@ -10,6 +10,7 @@ import streamlit as st
 import pandas as pd
 from pandas import DataFrame
 from PIL import Image
+impor json
 
 from sklearn import datasets
 
@@ -68,6 +69,13 @@ from sklearn.preprocessing import FunctionTransformer
 import pymongo
 from pymongo import MongoClient
 
+MONGODB_DATABASES = {
+    "default": {
+        "name": 'api',
+        "host": 'mongo',
+       "port": 27017
+    },
+}
 
 #Connect to the server MongoDB
 def init_connection():
@@ -129,7 +137,7 @@ with dataset:
         #data, dolphins
         #path
         
-        mycollection = db['iris']
+        mycollection = db['dolphins']
         st.write(mycollection)
         all_records = mycollection.find()
         list_cursor = list(all_records)
