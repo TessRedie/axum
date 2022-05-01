@@ -22,6 +22,5 @@ st.write(mycollection)
 all_records = mycollection.find()
 
 list_cursor = list(all_records)
-st.write(list_cursor)
 data = pd.DataFrame(list_cursor, columns= ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])
 st.write(data)
