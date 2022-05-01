@@ -77,13 +77,7 @@ MONGODB_DATABASES = {
     },
 }
 
-#Connect to the server MongoDB
-def init_connection():
-    return pymongo.MongoClient(**st.secrets["mongo"])
-
-client = init_connection()
-
-#client = pymongo.MongoClient('mongodb://localhost:27017/')
+client = pymongo.MongoClient('mongodb://localhost:27017/')
 
 db = client["streamlipro"]
 
