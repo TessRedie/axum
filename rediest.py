@@ -11,6 +11,13 @@ import pymongo
 
 #Connect to the server MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017/')
+MONGODB_DATABASES = {
+    "default": {
+        "name": 'api',
+        "host": 'mongo',
+       "port": 27017
+    },
+}
 
 
 #create DB named 'MTSpam'
