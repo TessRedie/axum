@@ -141,8 +141,8 @@ with dataset:
          #data type as float
         #data['dimension_1_mm']  = pd.to_numeric(data.dimension_1_mm, errors='coerce')
         #data['dimension_2_mm']  = pd.to_numeric(data.dimension_2_mm, errors='coerce')
-        "data['dimension_3_mm']  = pd.to_numeric(data.dimension_3_mm, errors='coerce') 
-        "data['mass_g']  = pd.to_numeric(data.mass_g, errors='coerce') 
+        #data['dimension_3_mm']  = pd.to_numeric(data.dimension_3_mm, errors='coerce') 
+        #data['mass_g']  = pd.to_numeric(data.mass_g, errors='coerce') 
         #data = data.astype({"variety": str}, errors='raise') 
         
         #data['variety'].astype(str)
