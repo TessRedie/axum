@@ -123,14 +123,10 @@ with dataset:
         #data, dolphins
         #path
         
-        mycollection = db['dolphins']
-        st.write(mycollection)
-        all_records = mycollection.find()
-        st.write(all_records)
+        all_records = db.dolphins.find({})
         list_cursor = list(all_records)
         data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
-
-        
+         #data type as float
         data['dimension_1_mm']  = pd.to_numeric(data.dimension_1_mm, errors='coerce')
         data['dimension_2_mm']  = pd.to_numeric(data.dimension_2_mm, errors='coerce')
         data['dimension_3_mm']  = pd.to_numeric(data.dimension_3_mm, errors='coerce') 
@@ -138,7 +134,7 @@ with dataset:
         #data = data.astype({"variety": str}, errors='raise') 
         
         #data['variety'].astype(str)   
-        st.write(data)     
+        st.dataframe(data.style.highlight_max(axis=0))
     
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
