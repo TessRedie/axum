@@ -70,6 +70,11 @@ from pymongo import MongoClient
 
 
 #Connect to the server MongoDB
+def init_connection():
+    return pymongo.MongoClient(**st.secrets["mongo"])
+
+client = init_connection()
+
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 
 db = client["streamlipro"]
@@ -124,22 +129,25 @@ with dataset:
         #data, dolphins
         #path
         
-        
-        collection=db["dolphins"]
-        cursor = collection.find()
-        entries=list(cursor)
-        entries[:]
-                
-        data = pd.DataFrame(entries, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        def get_data():
+            db = client.mydb
+            items = db.mycollection.find()
+            items = list(items)  # make hashable for st.experimental_memo
+            return items
+        items = get_data()
+        # Print results.    
+         
+        #data = pd.DataFrame(entries, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
          #data type as float
-        data['dimension_1_mm']  = pd.to_numeric(data.dimension_1_mm, errors='coerce')
-        data['dimension_2_mm']  = pd.to_numeric(data.dimension_2_mm, errors='coerce')
-        data['dimension_3_mm']  = pd.to_numeric(data.dimension_3_mm, errors='coerce') 
-        data['mass_g']  = pd.to_numeric(data.mass_g, errors='coerce') 
+        #data['dimension_1_mm']  = pd.to_numeric(data.dimension_1_mm, errors='coerce')
+        #data['dimension_2_mm']  = pd.to_numeric(data.dimension_2_mm, errors='coerce')
+        "data['dimension_3_mm']  = pd.to_numeric(data.dimension_3_mm, errors='coerce') 
+        "data['mass_g']  = pd.to_numeric(data.mass_g, errors='coerce') 
         #data = data.astype({"variety": str}, errors='raise') 
         
-        #data['variety'].astype(str)   
-        st.dataframe(data.style.highlight_max(axis=0))
+        #data['variety'].astype(str)
+         for item in items:
+            st.write(f"{item}:")
     
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
