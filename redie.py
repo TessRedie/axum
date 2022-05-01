@@ -147,7 +147,7 @@ with dataset:
         
         #data['variety'].astype(str)
          for item in items:
-            st.write(f"{item}:")
+                st.write(f"{item}:")
     
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
