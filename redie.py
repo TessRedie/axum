@@ -10,7 +10,7 @@ import streamlit as st
 import pandas as pd
 from pandas import DataFrame
 from PIL import Image
-impor json
+import json
 
 from sklearn import datasets
 
