@@ -135,6 +135,8 @@ with dataset:
             items = list(items)  # make hashable for st.experimental_memo
             return items
         items = get_data()
+        for item in items:
+                st.write(f"{item}:")
         # Print results.    
          
         #data = pd.DataFrame(entries, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
@@ -146,8 +148,7 @@ with dataset:
         #data = data.astype({"variety": str}, errors='raise') 
         
         #data['variety'].astype(str)
-         for item in items:
-                st.write(f"{item}:")
+         
     
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
