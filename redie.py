@@ -10,12 +10,6 @@ import streamlit as st
 import pandas as pd
 from pandas import DataFrame
 from PIL import Image
-import json
-from pandas.io.json import json_normalize
-import certifi
-import dnspython as dns
-import dns.resolver
-
 from sklearn import datasets
 
 import seaborn as sns
