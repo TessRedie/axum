@@ -66,10 +66,8 @@ from sklearn.preprocessing import FunctionTransformer
 import pymongo
 from pymongo import MongoClient
 
-
-#client = pymongo.MongoClient('mongodb://localhost:27017/')
 client=pymongo.MongoClient()
-client = MongoClient("mongodb+srv://localhost:27017/")
+client = pymongo.MongoClient('mongodb://localhost:27017/')
 db=client["streamlipro"]
 
 #db = client["streamlipro"]
