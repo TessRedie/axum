@@ -9,7 +9,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
-from PySide6 import QtDataVisualization #Q3DScatter
+from PySide6 import QtDataVisualization
 #libraries for text processing
 import nltk
 from nltk import FreqDist
