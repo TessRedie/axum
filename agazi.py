@@ -9,6 +9,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
+from PySide6 import QtDataVisualization #Q3DScatter
 #libraries for text processing
 import nltk
 from nltk import FreqDist
@@ -57,6 +58,7 @@ from multiprocessing import Pipe
 from telnetlib import SB
 from typing import Container, Text
 from xml.etree.ElementInclude import include
+
 #containers
 header = st.container()
 dataset = st.container()
@@ -101,17 +103,18 @@ with header:
 with dataset:    
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
+        image = Image.open('/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png')
+        st.image(image)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         #data, dolphins
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/streamlitpro/streamlit_app/data/dolphins.csv", sep=",", encoding="utf-8")
-        #st.write(data)
+        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/dolphins.csv", sep=",", encoding="utf-8")
+        data['variety'].astype(str)
     
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
         st.markdown("Publically available, Wine Quality dataset is related to red and white wine variants. The dataset contains a total 6497 rows and 11 phsicochemical properties and 1 sensory characterstics(ranked from 0 to 10 scores) are used as input and out variables " )
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/wine_qty.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/wine_qty.png", width=None)
         st.subheader("Input Variables")
         st.write("1. Fixed acidity (g(tartaric acid)/L): Primary fixed acids found in wine are tartaric, sussinic, citric and malic acids")
         st.write("2. Volatile acidity (g(acetic acid)/L): Are the gaseaous acids present in wine")
@@ -130,41 +133,36 @@ with dataset:
         st.write("In this project, the model is trained to predict whether the wine is red or white solely from the atributes. As described below, the dataset contains 6479 input rows with 12 feature columns. In some columns, there are missing values. Fixed acidity, volatile acidity, citric acid, residual sugar, chloride, pH and sulphate columns have missing values 10, 8, 3, 2, 2, 9 and 4 respectively.")
         st.markdown("[Source: Iris Dataset project](https://medium.com/@sailajakonda2012/random-forest-classification-in-prediction-of-best-quality-wine-d0d7591a7c17)")
         st.write("Wine Quality Dataset")
-        
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/winequality.csv")
 
+        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/winequality.csv")         
     #--------------------------------------------------------------
     elif dataset_name == "Iris":
         st.subheader("3. Iris Dataset")
         st.markdown("")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
         data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/iris.csv")
         data = data.drop(columns='Id') 
         st.write("Iris Dataset")
-
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/iris.csv")  
-        
+        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/iris.csv") 
     
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/breast_cancer.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/breast_cancer.png", width=None)
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
         data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/Breast_cancer_data.csv")
-        #st.write(data)
     #----------------------------------------------
     elif dataset_name == "Spam classifier":
         st.subheader("5. Spam Classifier Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
         data_spam = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/spam.csv", encoding='ISO 8859-1')
         data_spam.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
         data = data_spam[['Label','messages']]
         data['label'] = data['Label'].apply(lambda x:1 if x=='spam' else 0)
         #st.write(data)
-        
-    #-----------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
     
 with eda:
     st.write(data)
@@ -176,7 +174,6 @@ with eda:
     st.write("Dataset Information:", data.describe())
 
 #--------------------------------------------
-from PySide6 import QtDataVisualization #Q3DScatter: https://doc.qt.io/qtforpython/PySide6/QtDataVisualization/Q3DScatter.html
 with visualization:
     st.write("To explain the data, graphic representation such as Histograms, pairplot, pivot, correlation maps and 3D plots are used. In each visualization, the dataset is studied  and plotted accordingly. In some datasets, there are missing values. These missing values are not considered while plotting. Histograms and pivot graphs are used to understand the distribution of data. Correlation maps are developed to understand the relationship between features.")
     #"spring" = ['#78C850', '#F08030',  '#6890F0',  '#A8B820',  '#F8D030', '#E0C068', '#C03028', '#F85888', '#98D8D8']
@@ -1339,7 +1336,9 @@ with model_training:
         
         st.subheader("Mean Square Error, MSE")
         st.markdown("MSE is the most common loss function. It's defined as Mean or average of the square of the difference between actual and estimated values. MSE is used to check how close predictions are to actual values and hence it ensures the trained model to have no outlier predictions with significant errors. Its equation is as given below. For further readings, [please click here](https://www.mygreatlearning.com/blog/mean-square-error-explained/).")
-        st.latex("MSE = frac{1}{n}\\\\sum_{i=1}^{n}(y_i-y_i^{-})²")
+        st.latex('''
+        MSE = frac{1}{n}\sum_{i=1}^{n}(y_i-y_i^{-})²
+        ''')
         st.write("For the model applied, the value obtained is:")
 
         rnd_MSE = mean_squared_error(y_test, y_pred)
@@ -1348,7 +1347,9 @@ with model_training:
         
         st.subheader("Root Mean Square Errot, RMSE")
         st.markdown("[RMSE](https://www.sciencedirect.com/topics/engineering/root-mean-squared-error) is the standatd deviation of the residual(prediction errors. It measures how far the residuals are from the regresssion line data. In short, it shows how concentrated the data is around the line of best fit. When standarized observations($O_i$) are predictions($S_i$) are used as RMSE inputs, there is a direct relationship with the correlationn coefficient. For example, if the correlation is 1, the RMSE will be 0, because all of the points lie on the regression line and hence there is no error. ")
-        st.markdown(r"""$RMSE = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (S_i-O_i)^{2}}$""")
+        st.latex(r'''
+        RMSE = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (S_i-O_i)^{2}}
+        ''')
         rnd_RMSE = np.sqrt(rnd_MSE)
         st.write("Root Mean Squared Error, RMSE:", rnd_RMSE)
 
