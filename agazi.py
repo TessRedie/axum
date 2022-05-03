@@ -57,6 +57,7 @@ from multiprocessing import Pipe
 from telnetlib import SB
 from typing import Container, Text
 from xml.etree.ElementInclude import include
+#containers
 header = st.container()
 dataset = st.container()
 eda = st.container()
@@ -72,6 +73,7 @@ Metric_plot = st.container()
 model_training = st.container()
 pca_data=st.container()
 #-------------------------------------------------------------
+#Header
 st.sidebar.subheader("Developer Profile")
 st.sidebar.subheader("Tesfabirhan W. REDIE")
 #st.sidebar.image(r"/home/tess/Documents/python_projects/stream_heroku/images/oie_png(1).png", width=None)
@@ -81,7 +83,6 @@ about_project = st.sidebar.selectbox("About the Project", ("Summary of the Proje
 st.sidebar.header("Dataset")
 dataset_name = st.sidebar.selectbox("Select Dataset", ("Dolphins", "Wine Quality", "Iris", "Breast cancer", "Spam classifier"))
 #Data_Visualization = st.sidebar.selectbox("Select plot", ("Pair Plot", "Violin Plot", "Correlation matrix", "3D Scatter Plot"))
-classifier_name = st.sidebar.selectbox("Select model", ("KNN", "SVM", "Decision Tree Classifier", "Gradient Boosting Classifier", "Random Forest Classifier", "Random Forest Regressor"))
 
 #dataset_model = st.sidebar.selectbox("Model dataset", ("Target, y","Features, X" ))
 #-----------------------------------------
@@ -175,9 +176,10 @@ with eda:
     st.write("Dataset Information:", data.describe())
 
 #--------------------------------------------
+from PySide6 import QtDataVisualization #Q3DScatter: https://doc.qt.io/qtforpython/PySide6/QtDataVisualization/Q3DScatter.html
 with visualization:
     st.write("To explain the data, graphic representation such as Histograms, pairplot, pivot, correlation maps and 3D plots are used. In each visualization, the dataset is studied  and plotted accordingly. In some datasets, there are missing values. These missing values are not considered while plotting. Histograms and pivot graphs are used to understand the distribution of data. Correlation maps are developed to understand the relationship between features.")
-    colors_list = ['#78C850', '#F08030',  '#6890F0',  '#A8B820',  '#F8D030', '#E0C068', '#C03028', '#F85888', '#98D8D8']
+    #"spring" = ['#78C850', '#F08030',  '#6890F0',  '#A8B820',  '#F8D030', '#E0C068', '#C03028', '#F85888', '#98D8D8']
     if dataset_name =="Dolphins":
         fig, axs = plt.subplots(figsize=(16, 10))
         # Plot variable 1
@@ -195,7 +197,6 @@ with visualization:
         st.pyplot(fig)
         #--------------------------------------------
         #pair plot
-
         fig = plt.figure(figsize=(10,6))
         st.subheader("Features of Interest")
         st.markdown("This part relates to the selection of features (i.e. variables or columns) that would have a positive impact on the goodness of fit of our prediction model. For this, the correlation matrix is exploited as insights for selection. It is expected that most correlated features to the variety will have a positive impact on the goodness of fit of our model.")
@@ -216,22 +217,22 @@ with visualization:
 
         plt.subplot(2,2,1)
         df1 = data['dimension_1_mm']            
-        sns.violinplot(data=df1, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df1, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df1)
 
         plt.subplot(2,2,2)
         df2 = data[['dimension_2_mm']]
-        sns.violinplot(data=df2, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df2, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df2)
                 
         plt.subplot(2,2,3)
         df3 = data[['dimension_3_mm']]
-        sns.violinplot(data=df3, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df3, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df3)
                
         plt.subplot(2,2,4)
         df4 = data[['mass_g']]
-        sns.violinplot(data=df4, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df4, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df4)
         st.pyplot(fig)
         #------------------------------
@@ -250,6 +251,7 @@ with visualization:
         features_interest = data.select_dtypes(include=['float64', 'int64']).dropna().corr().iloc[1].sort_values(ascending=False)#[1:].index
         st.write(features_interest)
         st.markdown("3-D representation to show how the data may be correlated to multiple features.")
+        #scatter = Q3DScatter() - 
         scatter_3D = px.scatter_3d(data, x="dimension_2_mm", y="mass_g", z="variety", hover_name="dimension_3_mm", color="dimension_1_mm", width=1000, height=800)
         st.plotly_chart(scatter_3D)
 #-------------------------------------------
@@ -316,62 +318,62 @@ with visualization:
 
         plt.subplot(3,4,1)
         df1 = data[['fixed acidity']]
-        sns.violinplot(data=df1, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df1, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data=df1)
 
         plt.subplot(3,4,2)
         df2 = data[['volatile acidity']]
-        sns.violinplot(data=df2, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df2, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df2)
                 
         plt.subplot(3,4,3)
         df3 = data[['citric acid']]
-        sns.violinplot(data=df3, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df3, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df3)
                
         plt.subplot(3,4,4)
         df4 = data[['residual sugar']]
-        sns.violinplot(data=df4, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df4, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df4)
         
         plt.subplot(3,4,5)
         df5 = data[['chlorides']]
-        sns.violinplot(data=df5, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df5, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df5)
                    
         plt.subplot(3,4,6)
         df6 = data[['free sulfur dioxide']]
-        sns.violinplot(data=df6, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df6, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df6)
 
         plt.subplot(3,4,7)
         df7 = data[['total sulfur dioxide']]
-        sns.violinplot(data=df7, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df7, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df7)
 
         plt.subplot(3,4,8)
         df8 = data[['density']]
-        sns.violinplot(data=df8, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df8, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df8)
 
         plt.subplot(3,4,9)
         df9 = data[['pH']]
-        sns.violinplot(data=df9, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df9, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df9)
 
         plt.subplot(3,4,10)
         df10 = data[['sulphates']]
-        sns.violinplot(data=df10, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df10, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df10)
 
         plt.subplot(3,4,11)
         df11 = data[['alcohol']]
-        sns.violinplot(data=df11, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df11, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df11)
 
         plt.subplot(3,4,12)
         df12 = data[['quality']]
-        sns.violinplot(data=df12, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df12, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df12)       
         st.pyplot(fig)
         #-------------------------------------------
@@ -433,22 +435,22 @@ with visualization:
 
         plt.subplot(2,2,1)
         df1 = data['SepalLengthCm']            
-        sns.violinplot(data=df1, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df1, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df1)
 
         plt.subplot(2,2,2)
         df2 = data[['SepalWidthCm']]
-        sns.violinplot(data=df2, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df2, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df2)
                 
         plt.subplot(2,2,3)
         df3 = data[['PetalLengthCm']]
-        sns.violinplot(data=df3, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df3, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df3)
                
         plt.subplot(2,2,4)
         df4 = data[['PetalWidthCm']]
-        sns.violinplot(data=df4, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df4, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df4)
         st.pyplot(fig)
         #------------------------------
@@ -478,6 +480,7 @@ with visualization:
         fig, axs = plt.subplots(figsize=(16, 10))
         # Plot variable 1
         plt.subplot(3,2,1)
+        
         ax1 = sns.histplot(data=data, x="mean_radius", hue="diagnosis", kde=True)
         #Plot variable 2
         plt.subplot(3,2,2)
@@ -491,8 +494,8 @@ with visualization:
 
         # Plot variable 5
         plt.subplot(3,2,5)
-        y = data['Species']
-        ax1 = sns.histplot(data=data, x="mean_smoothness", y=y[:, np.newaxis], hue="diagnosis", kde=True)
+        #y = data['diagnosis'], y=y[:, np.newaxis]
+        ax1 = sns.histplot(data=data, x="mean_smoothness", hue="diagnosis", kde=True)
 
         st.pyplot(fig)
     #-------------------------------
@@ -517,28 +520,28 @@ with visualization:
 
         plt.subplot(3,2,1)
         df1 = data['mean_radius']            
-        sns.violinplot(data=df1, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df1, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df1)
 
         plt.subplot(3,2,2)
         df2 = data[['mean_texture']]
-        sns.violinplot(data=df2, orient="v", scale="count", palette=colors_list, split=True)
+        sns.violinplot(data=df2, orient="v", scale="count", palette="spring", split=True)
         sns.stripplot(data = df2)
                 
         plt.subplot(3,2,3)
         df3 = data[['mean_perimeter']]
-        sns.violinplot(data=df3, orient="v", scale="count", palette=colors_list, split=True, edgecolor = 'blue')
+        sns.violinplot(data=df3, orient="v", scale="count", palette="spring", split=True, edgecolor = 'blue')
         sns.stripplot(data = df3)
         
                
         plt.subplot(3,2,4)
         df4 = data[['mean_area']]
-        sns.violinplot(data=df4, orient="v", scale="count", palette=colors_list, split=True, edgecolor = 'blue')
+        sns.violinplot(data=df4, orient="v", scale="count", palette="spring", split=True, edgecolor = 'blue')
         sns.stripplot(data = df4)
 
         plt.subplot(3,2,5)
         df5 = data[['mean_smoothness']]
-        sns.violinplot(data=df4, orient="v", scale="count", palette=colors_list, split=True, edgecolor = 'blue')
+        sns.violinplot(data=df4, orient="v", scale="count", palette="spring", split=True, edgecolor = 'blue')
         sns.stripplot(data = df5)
 
         st.pyplot(fig)
@@ -587,6 +590,7 @@ with visualization:
 
         ax.set_title('Messages with length < 00')
         st.pyplot(fig)
+
     #---------------------------------
 with Preprocessing:
     st.header("Preprocessing")
@@ -1043,7 +1047,7 @@ with Train_test_split:
     st.write("y_train:", y_train.shape)
     st.write("X_train:", y_test.shape)
 #---------------------------------------
-
+classifier_name = st.sidebar.selectbox("Select model", ("KNN", "SVM", "Decision Tree Classifier", "Gradient Boosting Classifier", "Random Forest Classifier", "Random Forest Regressor"))
 with Parameters:
     params = dict()
     st.sidebar.subheader("Hyperparameters")
@@ -1335,7 +1339,7 @@ with model_training:
         
         st.subheader("Mean Square Error, MSE")
         st.markdown("MSE is the most common loss function. It's defined as Mean or average of the square of the difference between actual and estimated values. MSE is used to check how close predictions are to actual values and hence it ensures the trained model to have no outlier predictions with significant errors. Its equation is as given below. For further readings, [please click here](https://www.mygreatlearning.com/blog/mean-square-error-explained/).")
-        st.markdown(r"""$MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-y_i^{-})²$""")
+        st.latex("MSE = frac{1}{n}\\\\sum_{i=1}^{n}(y_i-y_i^{-})²")
         st.write("For the model applied, the value obtained is:")
 
         rnd_MSE = mean_squared_error(y_test, y_pred)
