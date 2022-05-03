@@ -1,11 +1,11 @@
 matplotlib==3.5.1
 nltk==3.7
-xlrd<2.0.1
-numpy<1.19.5
+numpy==1.19.5
 pandas<1.4.2
 Pillow==9.1.0
 plotly==5.7.0
 pymongo==4.1.1
+PySide6<6.3.0
 requests==2.25.1
 scikit_learn==1.0.2
 seaborn==0.11.2
