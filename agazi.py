@@ -1,27 +1,14 @@
 
-from dataclasses import dataclass
-from itertools import count
-from math import log2
-from multiprocessing import Pipe
-from telnetlib import SB
-from typing import Container, Text
-from xml.etree.ElementInclude import include
+#streamlit library
 import streamlit as st
+#basic libraries
 import pandas as pd
-from PIL import Image
-
-from sklearn import datasets
-
-import seaborn as sns
-from sklearn import datasets
-import matplotlib.pyplot as plt
-import plotly.express as px 
 import numpy as np
-from sklearn.impute import SimpleImputer
-from tkinter import Image
-from pathlib import Path
-
-
+#visualization libraries
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px
+from PIL import Image
 #libraries for text processing
 import nltk
 from nltk import FreqDist
@@ -37,25 +24,23 @@ from collections import Counter
 # for encoding and transforming
 from sklearn import preprocessing
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, MaxAbsScaler, MinMaxScaler
+from sklearn.impute import SimpleImputer
 from sklearn.dummy import DummyClassifier
 
-#pipeline
-from sklearn.pipeline import Pipeline 
-from sklearn.compose import ColumnTransformer, make_column_transformer
-
-#Grid Search
-from sklearn.model_selection import train_test_split,GridSearchCV 
-
-
-#model
+#model libraries
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC 
 
+#Grid Search
+from sklearn.model_selection import train_test_split,GridSearchCV 
+#pipeline
+from sklearn.pipeline import Pipeline 
+from sklearn.compose import ColumnTransformer, make_column_transformer
 
-#Model metrics
+#Model training and evaluation libraries 
 
 from numpy import absolute
 from sklearn.model_selection import cross_val_score
@@ -64,10 +49,14 @@ from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import classification_report, confusion_matrix, plot_confusion_matrix, accuracy_score, ConfusionMatrixDisplay, f1_score, fbeta_score
 from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
 from sklearn.preprocessing import FunctionTransformer
-
-
-#from sklearn.datasets import WineQT
-
+#additional libraries
+from dataclasses import dataclass
+from itertools import count
+from math import log2
+from multiprocessing import Pipe
+from telnetlib import SB
+from typing import Container, Text
+from xml.etree.ElementInclude import include
 header = st.container()
 dataset = st.container()
 eda = st.container()
