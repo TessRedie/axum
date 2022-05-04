@@ -116,17 +116,10 @@ with dataset:
         st.subheader("1. Dolphins Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
-        #data, dolphins
-        #path
-        
         mycollection = db['dolphins']
         st.write(mycollection)
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
-        
-        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
-        
-    
+        all_records = mycollection.find()                
+        data = pd.json_normalize(all_records)      
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
