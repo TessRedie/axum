@@ -122,8 +122,8 @@ with dataset:
         mycollection = db['dolphins']
         st.write(mycollection)
         all_records = mycollection.find() #json file       
-        data = pd.json_normalize((all_records)  
-#--------------------------------------------
+        data = pd.json_normalize((all_records)
+        st.write(data)
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
         st.markdown("Publically available, Wine Quality dataset is related to red and white wine variants. The dataset contains a total 6497 rows and 11 phsicochemical properties and 1 sensory characterstics(ranked from 0 to 10 scores) are used as input and out variables " )
