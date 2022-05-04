@@ -122,7 +122,7 @@ with dataset:
         mycollection = db['dolphins']
         st.write(mycollection)
         all_records = mycollection.find() #json file       
-        data = pd.json_normalize((all_records, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])  
+        data = pd.json_normalize((all_records)  
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
