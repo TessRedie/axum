@@ -4,13 +4,13 @@ import streamlit as st
 #basic libraries
 import pandas as pd
 import numpy as np
+import json
 #visualization libraries
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
-import json
-#from PySide6 import QtDataVisualization
+from PySide6 import QtDataVisualization #Q3DScatter
 #libraries for text processing
 import nltk
 from nltk import FreqDist
@@ -60,7 +60,6 @@ from telnetlib import SB
 from typing import Container, Text
 from xml.etree.ElementInclude import include
 
-#mongo database connect
 import pymongo
 from pymongo import MongoClient
 
@@ -70,7 +69,8 @@ client = pymongo.MongoClient('mongodb://localhost:27017/')
 
 db = client["local"]
 
-#containers
+#from sklearn.datasets import WineQT
+
 header = st.container()
 dataset = st.container()
 eda = st.container()
@@ -86,7 +86,6 @@ Metric_plot = st.container()
 model_training = st.container()
 pca_data=st.container()
 #-------------------------------------------------------------
-#Header
 st.sidebar.subheader("Developer Profile")
 st.sidebar.subheader("Tesfabirhan W. REDIE")
 #st.sidebar.image(r"/home/tess/Documents/python_projects/stream_heroku/images/oie_png(1).png", width=None)
@@ -96,6 +95,7 @@ about_project = st.sidebar.selectbox("About the Project", ("Summary of the Proje
 st.sidebar.header("Dataset")
 dataset_name = st.sidebar.selectbox("Select Dataset", ("Dolphins", "Wine Quality", "Iris", "Breast cancer", "Spam classifier"))
 #Data_Visualization = st.sidebar.selectbox("Select plot", ("Pair Plot", "Violin Plot", "Correlation matrix", "3D Scatter Plot"))
+classifier_name = st.sidebar.selectbox("Select model", ("KNN", "SVM", "Decision Tree Classifier", "Gradient Boosting Classifier", "Random Forest Classifier", "Random Forest Regressor"))
 
 #dataset_model = st.sidebar.selectbox("Model dataset", ("Target, y","Features, X" ))
 #-----------------------------------------
@@ -114,20 +114,24 @@ with header:
 with dataset:    
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         #data, dolphins
         #path
         
         mycollection = db['dolphins']
         st.write(mycollection)
-        all_records = mycollection.find() #json file       
-        data = pd.json_normalize((all_records)
-        st.write(data)
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+        
+        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        
+    
+#--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
         st.markdown("Publically available, Wine Quality dataset is related to red and white wine variants. The dataset contains a total 6497 rows and 11 phsicochemical properties and 1 sensory characterstics(ranked from 0 to 10 scores) are used as input and out variables " )
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/wine_qty.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/wine_qty.png", width=None)
         st.subheader("Input Variables")
         st.write("1. Fixed acidity (g(tartaric acid)/L): Primary fixed acids found in wine are tartaric, sussinic, citric and malic acids")
         st.write("2. Volatile acidity (g(acetic acid)/L): Are the gaseaous acids present in wine")
@@ -160,7 +164,7 @@ with dataset:
     elif dataset_name == "Iris":
         st.subheader("3. Iris Dataset")
         st.markdown("")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
         st.write("Iris Dataset")
 
@@ -172,7 +176,7 @@ with dataset:
     
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/breast_cancer.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/breast_cancer.png", width=None)
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
@@ -185,7 +189,7 @@ with dataset:
     #----------------------------------------------
     elif dataset_name == "Spam classifier":
         st.subheader("5. Spam Classifier Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
         mycollection = db['spam_data']
         st.write(mycollection)
         all_records = mycollection.find()
@@ -195,6 +199,7 @@ with dataset:
         #st.write(data.columns)
         #data = data_spam[['Label','messages']]
         data['label'] = data['Label'].apply(lambda x:1 if x=='spam' else 0)
+        
 #-----------------------------------------------------------------------------------------------------
     
 with eda:
