@@ -9,6 +9,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
+import json
 #from PySide6 import QtDataVisualization
 #libraries for text processing
 import nltk
@@ -120,12 +121,8 @@ with dataset:
         
         mycollection = db['dolphins']
         st.write(mycollection)
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
-        
-        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
-        
-    
+        all_records = mycollection.find() #json file       
+        data = pd.json_normalize((all_records, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])  
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
