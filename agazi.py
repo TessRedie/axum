@@ -113,7 +113,7 @@ with header:
 with dataset:    
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
-        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
+        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         #data, dolphins
         #path
@@ -130,7 +130,7 @@ with dataset:
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
         st.markdown("Publically available, Wine Quality dataset is related to red and white wine variants. The dataset contains a total 6497 rows and 11 phsicochemical properties and 1 sensory characterstics(ranked from 0 to 10 scores) are used as input and out variables " )
-        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/wine_qty.png", width=None)
+        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/wine_qty.png", width=None)
         st.subheader("Input Variables")
         st.write("1. Fixed acidity (g(tartaric acid)/L): Primary fixed acids found in wine are tartaric, sussinic, citric and malic acids")
         st.write("2. Volatile acidity (g(acetic acid)/L): Are the gaseaous acids present in wine")
@@ -163,7 +163,7 @@ with dataset:
     elif dataset_name == "Iris":
         st.subheader("3. Iris Dataset")
         st.markdown("")
-        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
+        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
         st.write("Iris Dataset")
 
@@ -175,7 +175,7 @@ with dataset:
     
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
-        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/breast_cancer.png", width=None)
+        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/breast_cancer.png", width=None)
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
@@ -188,7 +188,7 @@ with dataset:
     #----------------------------------------------
     elif dataset_name == "Spam classifier":
         st.subheader("5. Spam Classifier Dataset")
-        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
+        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
         mycollection = db['spam_data']
         st.write(mycollection)
         all_records = mycollection.find()
