@@ -59,6 +59,16 @@ from telnetlib import SB
 from typing import Container, Text
 from xml.etree.ElementInclude import include
 
+#mongo database connect
+import pymongo
+from pymongo import MongoClient
+
+
+#Connect to the server MongoDB
+client = pymongo.MongoClient('mongodb://localhost:27017/')
+
+db = client["local"]
+
 #containers
 header = st.container()
 dataset = st.container()
@@ -103,12 +113,18 @@ with header:
 with dataset:    
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
-        image = Image.open('/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png')
-        st.image(image)
+        st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         #data, dolphins
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/dolphins.csv", sep=",", encoding="utf-8")
-        data['variety'].astype(str)
+        #path
+        
+        mycollection = db['dolphins']
+        st.write(mycollection)
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+        
+        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        
     
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
@@ -134,17 +150,28 @@ with dataset:
         st.markdown("[Source: Iris Dataset project](https://medium.com/@sailajakonda2012/random-forest-classification-in-prediction-of-best-quality-wine-d0d7591a7c17)")
         st.write("Wine Quality Dataset")
 
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/winequality.csv")         
+
+        mycollection = db['winequality']
+        st.write(mycollection)
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+        data = pd.DataFrame(list_cursor, columns=[
+            'type', 'fixed acidity', 'volatile acidity',
+            'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
+            'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality' ])    
     #--------------------------------------------------------------
     elif dataset_name == "Iris":
         st.subheader("3. Iris Dataset")
         st.markdown("")
         st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/iris.csv")
-        data = data.drop(columns='Id') 
         st.write("Iris Dataset")
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/iris.csv") 
+
+        mycollection = db['iris']
+        st.write(mycollection)
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+        data = pd.DataFrame(list_cursor, columns= ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])          
     
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
@@ -152,16 +179,25 @@ with dataset:
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
-        data = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/Breast_cancer_data.csv")
+        mycollection = db['breast_cancer']
+        st.write(mycollection)
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+        data = pd.DataFrame(list_cursor, columns=['mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness', "diagnosis"])
+                
     #----------------------------------------------
     elif dataset_name == "Spam classifier":
         st.subheader("5. Spam Classifier Dataset")
         st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
-        data_spam = pd.read_csv(r"/home/tess/Documents/python_projects/stream_heroku/data/spam.csv", encoding='ISO 8859-1')
-        data_spam.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
-        data = data_spam[['Label','messages']]
+        mycollection = db['spam_data']
+        st.write(mycollection)
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+        data = pd.DataFrame(list_cursor, columns=['v1','v2'])
+        data.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
+        #st.write(data.columns)
+        #data = data_spam[['Label','messages']]
         data['label'] = data['Label'].apply(lambda x:1 if x=='spam' else 0)
-        #st.write(data)
 #-----------------------------------------------------------------------------------------------------
     
 with eda:
