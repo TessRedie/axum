@@ -119,10 +119,12 @@ with dataset:
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         datapoints = list(db.dolphins.find({}))
         data = json_normalize(datapoints)
+        
+        url = "https://github.com/TessRedie/mongostreamapp/blob/master/dolphins.csv"
 
         #data = DataFrame(list(db.dolphins.find({})), columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
                       
-        #data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        data = pd.read_csv(url, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
