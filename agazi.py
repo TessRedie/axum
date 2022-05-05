@@ -1075,7 +1075,6 @@ with Train_test_split:
     st.write("y_train:", y_train.shape)
     st.write("X_train:", y_test.shape)
 #---------------------------------------
-classifier_name = st.sidebar.selectbox("Select model", ("KNN", "SVM", "Decision Tree Classifier", "Gradient Boosting Classifier", "Random Forest Classifier", "Random Forest Regressor"))
 with Parameters:
     params = dict()
     st.sidebar.subheader("Hyperparameters")
