@@ -118,8 +118,11 @@ with dataset:
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         mycollection = db['dolphins']
         st.write(mycollection)
-        all_records = mycollection.find()                
-        data = pd.json_normalize(all_records)      
+        #data import from mongodb compass
+        all_records = mycollection.find()
+        list_cursor = list(all_records)
+                      
+        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])  
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
