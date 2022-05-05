@@ -116,13 +116,10 @@ with dataset:
         st.subheader("1. Dolphins Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
-        mycollection = db.dolphins
-        st.write(mycollection)
-        #data import from mongodb compass
-        cursor = mycollection.find()
-        list_cursor = list(cursor)
+        
+        data = DataFrame(list(db.dolphins.find({}), columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
                       
-        data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])  
+        #data = pd.DataFrame(list_cursor, )  
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
