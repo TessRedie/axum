@@ -67,7 +67,7 @@ from pymongo import MongoClient
 #Connect to the server MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 
-db = client["local"]
+db = client.local
 
 #from sklearn.datasets import WineQT
 
@@ -116,7 +116,7 @@ with dataset:
         st.subheader("1. Dolphins Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
-        mycollection = db['dolphins']
+        mycollection = db.dolphins
         st.write(mycollection)
         #data import from mongodb compass
         all_records = mycollection.find()
@@ -148,7 +148,7 @@ with dataset:
         st.write("Wine Quality Dataset")
 
 
-        mycollection = db['winequality']
+        mycollection = db.winequality
         st.write(mycollection)
         all_records = mycollection.find()
         list_cursor = list(all_records)
@@ -164,7 +164,7 @@ with dataset:
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
         st.write("Iris Dataset")
 
-        mycollection = db['iris']
+        mycollection = db.iris
         st.write(mycollection)
         all_records = mycollection.find()
         list_cursor = list(all_records)
@@ -176,7 +176,7 @@ with dataset:
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
-        mycollection = db['breast_cancer']
+        mycollection = db.breast_cancer
         st.write(mycollection)
         all_records = mycollection.find()
         list_cursor = list(all_records)
@@ -186,7 +186,7 @@ with dataset:
     elif dataset_name == "Spam classifier":
         st.subheader("5. Spam Classifier Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
-        mycollection = db['spam_data']
+        mycollection = db.spam_data
         st.write(mycollection)
         all_records = mycollection.find()
         list_cursor = list(all_records)
