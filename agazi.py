@@ -117,14 +117,8 @@ with dataset:
         st.subheader("1. Dolphins Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
-        #datapoints = list(db.dolphins.find({}))
-        #data = json_normalize(datapoints)
         
-        url = "https://github.com/TessRedie/mongostreamapp/blob/master/dolphins.csv"
-
-        #data = DataFrame(list(db.dolphins.find({})), columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
-                      
-        data = pd.read_csv(url, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        data = DataFrame(list(db.dolphins.find({})), columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
