@@ -119,8 +119,8 @@ with dataset:
         mycollection = db.dolphins
         st.write(mycollection)
         #data import from mongodb compass
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
+        cursor = mycollection.find()
+        list_cursor = list(cursor)
                       
         data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])  
 #--------------------------------------------
