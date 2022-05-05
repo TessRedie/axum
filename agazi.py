@@ -117,8 +117,8 @@ with dataset:
         st.subheader("1. Dolphins Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
-        datapoints = list(db.dolphins.find({}))
-        data = json_normalize(datapoints)
+        #datapoints = list(db.dolphins.find({}))
+        #data = json_normalize(datapoints)
         
         url = "https://github.com/TessRedie/mongostreamapp/blob/master/dolphins.csv"
 
