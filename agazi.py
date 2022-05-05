@@ -3,6 +3,7 @@
 import streamlit as st
 #basic libraries
 import pandas as pd
+from pandas import DataFrame
 import numpy as np
 import json
 #visualization libraries
@@ -10,7 +11,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
-#from PySide6 import QtDataVisualization #Q3DScatter
+from PySide6 import QtDataVisualization #Q3DScatter
 #libraries for text processing
 import nltk
 from nltk import FreqDist
@@ -116,10 +117,10 @@ with dataset:
         st.subheader("1. Dolphins Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
-        
-        data = DataFrame(list(db.dolphins.find({}), columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+
+        data = DataFrame(list(db.dolphins.find({})), columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
                       
-        #data = pd.DataFrame(list_cursor, )  
+        #data = pd.DataFrame(list_cursor, columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
@@ -144,8 +145,7 @@ with dataset:
         st.markdown("[Source: Iris Dataset project](https://medium.com/@sailajakonda2012/random-forest-classification-in-prediction-of-best-quality-wine-d0d7591a7c17)")
         st.write("Wine Quality Dataset")
 
-
-        data = DataFrame(list(db.winequality.find({}), columns=[
+        data = DataFrame(list(db.winequality.find({})), columns=[
             'type', 'fixed acidity', 'volatile acidity',
             'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
             'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality' ])    
@@ -157,11 +157,7 @@ with dataset:
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
         st.write("Iris Dataset")
 
-        mycollection = db.iris
-        st.write(mycollection)
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
-        data = pd.DataFrame(list_cursor, columns= ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])          
+        data = DataFrame(list(db.iris.find({})), columns= ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])          
     
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
@@ -169,21 +165,14 @@ with dataset:
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
-        mycollection = db.breast_cancer
-        st.write(mycollection)
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
-        data = pd.DataFrame(list_cursor, columns=['mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness', "diagnosis"])
+        data = DataFrame(list(db.breast_cancer.find({})), columns=['mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness', "diagnosis"])
                 
     #----------------------------------------------
     elif dataset_name == "Spam classifier":
         st.subheader("5. Spam Classifier Dataset")
         #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
-        mycollection = db.spam_data
-        st.write(mycollection)
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
-        data = pd.DataFrame(list_cursor, columns=['v1','v2'])
+
+        data = DataFrame(list(db.spam_data.find({})), columns=['v1','v2'])
         data.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
         #st.write(data.columns)
         #data = data_spam[['Label','messages']]
@@ -1410,7 +1399,7 @@ with model_training:
         
         st.subheader("Mean Square Error, MSE")
         st.markdown("MSE is the most common loss function. It's defined as Mean or average of the square of the difference between actual and estimated values. MSE is used to check how close predictions are to actual values and hence it ensures the trained model to have no outlier predictions with significant errors. Its equation is as given below. For further readings, [please click here](https://www.mygreatlearning.com/blog/mean-square-error-explained/).")
-        st.markdown(r"""$MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-y_i^{-})²$""")
+        st.latex(r'''MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\bar y_i)²''')
         st.write("For the model applied, the value obtained is:")
         rnd_MSE = mean_squared_error(y_test, y_pred)
         st.write("Mean Squared Error, MSE:", rnd_MSE)
@@ -1418,7 +1407,7 @@ with model_training:
         
         st.subheader("Root Mean Square Errot, RMSE")
         st.markdown("[RMSE](https://www.sciencedirect.com/topics/engineering/root-mean-squared-error) is the standatd deviation of the residual(prediction errors. It measures how far the residuals are from the regresssion line data. In short, it shows how concentrated the data is around the line of best fit. When standarized observations($O_i$) are predictions($S_i$) are used as RMSE inputs, there is a direct relationship with the correlationn coefficient. For example, if the correlation is 1, the RMSE will be 0, because all of the points lie on the regression line and hence there is no error. ")
-        st.markdown(r"""$RMSE = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (S_i-O_i)^{2}}$""")
+        st.latex(r'''RMSE = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (S_i-O_i)^{2}}''')
         rnd_RMSE = np.sqrt(rnd_MSE)
         st.write("Root Mean Squared Error, RMSE:", rnd_RMSE)
 
