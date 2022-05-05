@@ -145,11 +145,7 @@ with dataset:
         st.write("Wine Quality Dataset")
 
 
-        mycollection = db.winequality
-        st.write(mycollection)
-        all_records = mycollection.find()
-        list_cursor = list(all_records)
-        data = pd.DataFrame(list_cursor, columns=[
+        data = DataFrame(list(db.winequality.find({}), columns=[
             'type', 'fixed acidity', 'volatile acidity',
             'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
             'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality' ])    
