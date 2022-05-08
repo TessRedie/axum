@@ -11,7 +11,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
-#from PySide6 import QtDataVisualization #Q3DScatter
+from PySide6 import QtDataVisualization #Q3DScatter
 #libraries for text processing
 import nltk
 from nltk import FreqDist
@@ -61,16 +61,7 @@ from telnetlib import SB
 from typing import Container, Text
 from xml.etree.ElementInclude import include
 
-import pymongo
-from pymongo import MongoClient
-
-
-#Connect to the server MongoDB
-client = pymongo.MongoClient('mongodb://localhost:27017/')
-
-db = client.local
-
-#from sklearn.datasets import WineQT
+#connect to postgresql database
 
 header = st.container()
 dataset = st.container()
@@ -89,7 +80,7 @@ pca_data=st.container()
 #-------------------------------------------------------------
 st.sidebar.subheader("Developer Profile")
 st.sidebar.subheader("Tesfabirhan W. REDIE")
-#st.sidebar.image(r"/home/tess/Documents/python_projects/stream_heroku/images/oie_png(1).png", width=None)
+#st.sidebar.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/oie_png(1).png", width=None)
 st.sidebar.write("Joining to the IT profession lately, I'm currenly studying to be an expert in Artificial Intelligence Application development, thanks to Greta Val-de-Loire and my school, Ecole Microsoft IA by Simplon. Always passionate by R&D, Studies, Data and Application Development, I believe that I have great capacity to integrate, intervene, strong in proposing, efficient in group work as well as love being in autonomy.", align_text='center')
 #------------------------------------------
 about_project = st.sidebar.selectbox("About the Project", ("Summary of the Project", "Motivation"))
@@ -111,19 +102,20 @@ with header:
         st.write("You may wonder what motivates me to do this project, am I right? If so, this is a brief statement")
         st.write("The popularity of Artificial Intelligence is soaring recently because of many factors. People are becoming more thirsty to train models so that a system or a program is able to think and learn from experiences and apply it for human benefits. AI applications are almost in every sector of our economy, social services and businesses. And, I'm not different. Joining the world of AI is giving me a unique experience. I have been dealing with data since early days of professional studies. I was trained to be a Surveying Engineer and then as an Agricultural Engineer. Data has been crucial throughout my studies. Nevertheless, it's only recently that I'm feeling more lean to data than ever before. This is because I found AI to be the best science to exploit data more efficiently for the intended purpose.")
         st.write("Saying that, my motivation to join the AI domain though in a haphazard way, I believe that it is an ambitious dream of more than two decades search for knowledge and skills pertaining to my passion and curiousty of data and data use. It's based on this curiousity driven endeavour that I feel encouraged to develop this ML website for boosting my professional sprint and I hope you will find it useful for you.")
-
-with dataset:    
+from pandas.io.json import json_normalize
+with dataset:
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/doplphin.png", width=None)
+        #st.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/doplphin.png", width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
-        
-        data = DataFrame(list(db.dolphins.find({})), columns=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        st.subheader("Dataset")
+        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv"
+        data = pd.read_csv(url, usecols=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
         st.subheader("2. Wine Quality Dataset")
         st.markdown("Publically available, Wine Quality dataset is related to red and white wine variants. The dataset contains a total 6497 rows and 11 phsicochemical properties and 1 sensory characterstics(ranked from 0 to 10 scores) are used as input and out variables " )
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/wine_qty.png", width=None)
+        #st.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/wine_qty.png", width=None)
         st.subheader("Input Variables")
         st.write("1. Fixed acidity (g(tartaric acid)/L): Primary fixed acids found in wine are tartaric, sussinic, citric and malic acids")
         st.write("2. Volatile acidity (g(acetic acid)/L): Are the gaseaous acids present in wine")
@@ -143,7 +135,9 @@ with dataset:
         st.markdown("[Source: Iris Dataset project](https://medium.com/@sailajakonda2012/random-forest-classification-in-prediction-of-best-quality-wine-d0d7591a7c17)")
         st.write("Wine Quality Dataset")
 
-        data = DataFrame(list(db.winequality.find({})), columns=[
+        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/winequality.csv"
+
+        data = pd.read_csv(url, sep=',', usecols=[
             'type', 'fixed acidity', 'volatile acidity',
             'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
             'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality' ])    
@@ -151,26 +145,31 @@ with dataset:
     elif dataset_name == "Iris":
         st.subheader("3. Iris Dataset")
         st.markdown("")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/iris-dataset.png", width=None)
+        #st.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/iris-dataset.png", width=None)
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
         st.write("Iris Dataset")
 
-        data = DataFrame(list(db.iris.find({})), columns= ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])          
+        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/Iris.csv"
+
+        data = pd.read_csv(url, sep=',', usecols=['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])          
     
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/breast_cancer.png", width=None)
+        #st.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/breast_cancer.png", width=None)
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
-        data = DataFrame(list(db.breast_cancer.find({})), columns=['mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness', "diagnosis"])
+        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/Breast_cancer_data.csv"
+
+        data = pd.read_csv(url, sep=',', usecols=['mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness', "diagnosis"])
                 
     #----------------------------------------------
     elif dataset_name == "Spam classifier":
         st.subheader("5. Spam Classifier Dataset")
-        #st.image(r"/home/tess/Documents/python_projects/stream_heroku/images/spam_text.png", width=None)
+        #st.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/spam_text.png", width=None)
+        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/spam.csv"
 
-        data = DataFrame(list(db.spam_data.find({})), columns=['v1','v2'])
+        data = pd.read_csv(url, sep=',', usecols=['v1','v2'], encoding='ISO:8859-1')
         data.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
         #st.write(data.columns)
         #data = data_spam[['Label','messages']]
