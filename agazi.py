@@ -92,7 +92,7 @@ classifier_name = st.sidebar.selectbox("Select model", ("KNN", "SVM", "Decision 
 #dataset_model = st.sidebar.selectbox("Model dataset", ("Target, y","Features, X" ))
 #-----------------------------------------
 with header:
-    st.title("Machine Learning and AI Application Models")
+    st.title("Machine Learning for Beginners")
     if about_project =="Summary of the Project":
         st.header("About the project")
         st.write("In this ML project, I have tried to apply the skills I have learnt for the last 4 months. I have used public datasets. Originally from [Kaggle](https://www.kaggle.com/)Five datasets(Dolphins, Wine Quality, Iris, Breast cancer as well as Spam classification) are used for training three models(Random Forest Classifier, SVM, and KNN). For every dataset, Explanatory Data Analysis(EDA), Data Visualization, Features engineering, model training and evaluations, as well as PCA are presented. It\'s my first experience.  Its purpose is mainly to share knowlegde and learn from the feedbacks. Therefore feel free to add your own inputs.")
