@@ -80,7 +80,8 @@ pca_data=st.container()
 #-------------------------------------------------------------
 st.sidebar.subheader("Developer Profile")
 st.sidebar.subheader("Tesfabirhan W. REDIE")
-#st.sidebar.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/oie_png(1).png", width=None)
+htp = "https://user-images.githubusercontent.com/95612783/167319949-6be62766-3d49-493e-bcb0-d5d70a932aa0.png"
+st.sidebar.image(htp, width=None)
 st.sidebar.write("Joining to the IT profession lately, I'm currenly studying to be an expert in Artificial Intelligence Application development, thanks to Greta Val-de-Loire and my school, Ecole Microsoft IA by Simplon. Always passionate by R&D, Studies, Data and Application Development, I believe that I have great capacity to integrate, intervene, strong in proposing, efficient in group work as well as love being in autonomy.", align_text='center')
 #------------------------------------------
 about_project = st.sidebar.selectbox("About the Project", ("Summary of the Project", "Motivation"))
@@ -106,7 +107,8 @@ from pandas.io.json import json_normalize
 with dataset:
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
-        #st.image(r"/home/tess/.vscode/python_projects/stream_heroku/images/doplphin.png", width=None)
+        htp = "https://user-images.githubusercontent.com/95612783/167320127-6a81873a-655a-4c7f-a852-a45b34ac7c1c.png"
+        st.image(htp, width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         st.subheader("Dataset")
         url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv"
