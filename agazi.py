@@ -1205,17 +1205,13 @@ with Parameters:
             params['verbose']=verbose
         elif classifier_name == "Random Forest Regressor":
             #n_estimators
-            n_estimators = st.sidebar.slider("Number of estimator", 0, 500, (10,50), 50)
-            n_estimators_step = st.sidebar.number_input("Steps", 10)
-            n_estimators_range = np.arange(n_estimators[0], n_estimators[1]+n_estimators_step, n_estimators_step)
-            params["n_estimators_range"]= n_estimators_range
+            n_estimators = st.sidebar.slider("Number of estimator", 0, 500, (10,50), 10)
+            params["n_estimators"]= n_estimators
 
             #max depth
 
-            max_depth = st.sidebar.slider("Maximum depth", 5, 15, (5,8), 2)
-            max_depth_step=st.sidebar.number_input("Step size for max depht",1,3)
-            max_depth_range =np.arange(max_depth[0],max_depth[1]+max_depth_step, max_depth_step)
-            params["max_depth_range"]= max_depth_range
+            max_depth = st.sidebar.slider("Maximum depth", 5, 15, (5,8), 1)
+            params["max_depth"]= max_depth
 
             #features
             max_features =st.sidebar.multiselect("Max Features (You can select multiple options)",["auto", "log2","sqrt"],["sqrt"])
@@ -1323,8 +1319,8 @@ with model:
         model = RandomForestRegressor(random_state=params["random_state"], bootstrap=params["bootstrap"], criterion=params["criterion"])
         param_grid = dict(
             max_features=params["max_features"],
-            n_estimators=params["n_estimators_range"],
-            max_depth=params["max_depth_range"],
+            n_estimators=params["n_estimators"],
+            max_depth=params["max_depth"],
             min_samples_split=params["min_samples_split"],
             min_samples_leaf=params["min_samples_leaf"])
     
