@@ -173,7 +173,7 @@ with dataset:
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
         st.markdown("Breast cancer Dataset Descritption")
-        st.write("
+        #st.write("
         htp = "https://user-images.githubusercontent.com/95612783/167320495-04d70b78-2768-4c43-947a-9f15f11725be.png"
         st.image(htp, width=None)
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
@@ -195,10 +195,8 @@ with dataset:
         data.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
         #st.write(data.columns)
         #data = data_spam[['Label','messages']]
-        data['label'] = data['Label'].apply(lambda x:1 if x=='spam' else 0)
-        
+        data['label'] = data['Label'].apply(lambda x:1 if x=='spam' else 0)     
 #-----------------------------------------------------------------------------------------------------
-    
 with eda:
     st.write(data)
     #data shape
@@ -207,7 +205,6 @@ with eda:
     st.write("Missing Data:", data.isnull().sum())
     data.drop_duplicates(inplace = True)
     st.write("Dataset Information:", data.describe())
-
 #--------------------------------------------
 with visualization:
     st.write("To explain the data, graphic representation such as Histograms, pairplot, pivot, correlation maps and 3D plots are used. In each visualization, the dataset is studied  and plotted accordingly. In some datasets, there are missing values. These missing values are not considered while plotting. Histograms and pivot graphs are used to understand the distribution of data. Correlation maps are developed to understand the relationship between features.")
@@ -288,53 +285,41 @@ with visualization:
         st.plotly_chart(scatter_3D)
 #-------------------------------------------
     elif dataset_name=="Wine Quality":   
-
         st.subheader("Histogram Plot")
         fig, axs = plt.subplots(figsize=(12, 10))
         # Plot variable 1
         plt.subplot(3,4,1)
         ax1 = sns.histplot(data=data, x="fixed acidity", hue="type", kde=True)
-
         #Plot variable 2
         plt.subplot(3,4,2)
         ax1 = sns.histplot(data=data, x="volatile acidity", hue="type", kde=True)
-
         # Plot variable 3
         plt.subplot(3,4,3)
         ax1 = sns.histplot(data=data, x="citric acid", hue="type", kde=True)
-
         # Plot variable 4
         plt.subplot(3,4,4)
         ax1 = sns.histplot(data=data, x="residual sugar", hue="type", kde=True)
-        
         #Plot variable 5
         plt.subplot(3,4,5)
         ax1=sns.histplot(data=data,x="free sulfur dioxide", hue="type", kde=True)
-
         #Plot variable 6
         plt.subplot(3,4,6)
         ax1=sns.histplot(data=data,x="free sulfur dioxide", hue="type", kde=True)
-
         #Plot variable 7
         plt.subplot(3,4,7)
         ax1=sns.histplot(data=data,x="total sulfur dioxide", hue="type", kde=True)
-
         #Plot variable 8
         plt.subplot(3,4,8)
         ax1=sns.histplot(data=data,x="density", hue="type", kde=True)
-
         #Plot variable 9
         plt.subplot(3,4,9)
         ax1=sns.histplot(data=data,x="pH", hue="type", kde=True)
-
         #Plot variable 10
         plt.subplot(3,4,10)
         ax1=sns.histplot(data=data,x="sulphates", hue="type", kde=True)
-
         #Plot variable 11
         plt.subplot(3,4,11)
         ax1=sns.histplot(data=data,x="alcohol", hue="type", kde=True)
-
         #Plot variable 9
         plt.subplot(3,4,12)
         ax1=sns.histplot(data=data,x="quality", hue="type", kde=True)
@@ -342,12 +327,9 @@ with visualization:
         #--------------------------------------------
         #Violin Plot
         #--------------------------------------------
-
         st.subheader("Violin Plot")
-        st.markdown("Violin plot shows the concentration of data[for more details click this link](https://www.infinityinsight.com/blog/?p=357). ")        
-       
+        st.markdown("Violin plot shows the concentration of data[for more details click this link](https://www.infinityinsight.com/blog/?p=357). ")               
         fig = plt.figure(figsize=(12,10))
-
         plt.subplot(3,4,1)
         df1 = data[['fixed acidity']]
         sns.violinplot(data=df1, orient="v", scale="count", palette="spring", split=True)
