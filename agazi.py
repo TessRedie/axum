@@ -64,7 +64,6 @@ from xml.etree.ElementInclude import include
 #connect to postgresql database
 
 header = st.container()
-description=st.conainer()
 dataset = st.container()
 eda = st.container()
 visualization = st.container()
