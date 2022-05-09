@@ -168,7 +168,7 @@ with dataset:
         #data
         url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/Iris.csv"
         data = pd.read_csv(url, sep=',', usecols=['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])
-        st.markdown("Data Source: [Kaggle Iris Species](https://www.kaggle.com/datasets/uciml/iris"))
+        st.markdown("Data Source: [Kaggle Iris Species](https://www.kaggle.com/datasets/uciml/iris)")
     #-------------------------------------------------
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
