@@ -64,6 +64,7 @@ from xml.etree.ElementInclude import include
 #connect to postgresql database
 
 header = st.container()
+description=st.conainer()
 dataset = st.container()
 eda = st.container()
 visualization = st.container()
@@ -82,10 +83,10 @@ st.sidebar.subheader("Developer Profile")
 st.sidebar.subheader("Tesfabirhan W. REDIE")
 htp = "https://user-images.githubusercontent.com/95612783/167319949-6be62766-3d49-493e-bcb0-d5d70a932aa0.png"
 st.sidebar.image(htp, width=None)
-st.sidebar.write("Joining to the IT profession lately, I'm currenly studying to be an expert in Artificial Intelligence Application development, thanks to Greta Val-de-Loire and my school, Ecole Microsoft IA by Simplon. Always passionate by R&D, Studies, Data and Application Development, I believe that I have great capacity to integrate, intervene, strong in proposing, efficient in group work as well as love being in autonomy.", align_text='center')
+st.sidebar.write("Joining to the Artificial Intelligence(AI) profession lately, I'm currenly studying Artificial Intelligence Development Application development, thanks to Greta Val-de-Loire and my school, Ecole Microsoft IA by Simplon. Always passionate by R&D, Studies, Data and Application Development, I believe that I have great capacity to integrate, intervene, strong in proposing, efficient in group work as well as love being in autonomy.", align_text='center')
 #------------------------------------------
 about_project = st.sidebar.selectbox("About the Project", ("Summary of the Project", "Motivation"))
-st.sidebar.header("Dataset")
+st.sidebar.header("Select Dataset Type")
 dataset_name = st.sidebar.selectbox("Select Dataset", ("Dolphins", "Wine Quality", "Iris", "Breast cancer", "Spam classifier"))
 #Data_Visualization = st.sidebar.selectbox("Select plot", ("Pair Plot", "Violin Plot", "Correlation matrix", "3D Scatter Plot"))
 classifier_name = st.sidebar.selectbox("Select model", ("KNN", "SVM", "Decision Tree Classifier", "Gradient Boosting Classifier", "Random Forest Classifier", "Random Forest Regressor"))
@@ -97,19 +98,26 @@ with header:
     if about_project =="Summary of the Project":
         st.header("About the project")
         st.write("In this ML project, I have tried to apply the skills I have learnt for the last 4 months. I believe that it will help for beginners. I have used public datasets. Originally from [Kaggle](https://www.kaggle.com/)Five datasets(Dolphins, Wine Quality, Iris, Breast cancer as well as Spam dataset) are used for training six models(SVM, KNN, Decision Tree Classifier, Gradient Boosting Classifier, Random Forest Classifier as well as Random Forest Regression). For every dataset, Explanatory Data Analysis(EDA), Data Visualization, Features engineering, model training and evaluations, as well as PCA are presented. It\'s my first experience.  Its purpose is mainly to share knowlegde and learn from the feedbacks. Therefore feel free to add your own inputs.")
-    
+        st.subheader("Steps")
+        st.markdown("**Step 1: Importing Data from Github**")
+        st.write("The data of each dataset obtained from kaggle is saved on my github by commiting in a new resipotory created for this project. I found this to be more easy and practical than storing it in any other database cloud. It is public and can be accissible by [clicking here](https://github.com/TessRedie/mongostreamapp).")
+        st.write("To upload the data, first click on the dataset you select. Then, show the raw data. From there a link will be provided which can be used as a url.")
+        st.markdown(
+            """With dataset:
+            url = https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv
+            """)
     elif about_project == "Motivation":
         st.subheader("Motivation")
         st.write("You may wonder what motivates me to do this project, am I right? If so, this is a brief statement")
         st.write("The popularity of Artificial Intelligence is soaring recently because of many factors. People are becoming more thirsty to train models so that a system or a program is able to think and learn from experiences and apply it for human benefits. AI applications are almost in every sector of our economy, social services and businesses. And, I'm not different. Joining the world of AI is giving me a unique experience. I have been dealing with data since early days of professional studies. I was trained to be a Surveying Engineer and then as an Agricultural Engineer. Data has been crucial throughout my studies. Nevertheless, it's only recently that I'm feeling more lean to data than ever before. This is because I found AI to be the best science to exploit data more efficiently for the intended purpose.")
-        st.write("Saying that, my motivation to join the AI domain though in a haphazard way, I believe that it is an ambitious dream of more than two decades search for knowledge and skills pertaining to my passion and curiousty of data and data use. It's based on this curiousity driven endeavour that I feel encouraged to develop this ML website for boosting my professional sprint and I hope you will find it useful for you.")
-from pandas.io.json import json_normalize
+        st.write("Saying that, my motivation to join the AI domain though in a haphazard way, I believe that it is an ambitious dream of more than two decades search for knowledge and skills pertaining to my passion and curiousty of data and data use. It's based on this curiousity driven endeavour that I feel encouraged to develop this ML website to deepen my experience.I hope you will find it useful.")
 with dataset:
     if dataset_name == "Dolphins":
         st.subheader("1. Dolphins Dataset")
         htp = "https://user-images.githubusercontent.com/95612783/167320127-6a81873a-655a-4c7f-a852-a45b34ac7c1c.png"
         st.image(htp, width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
+        #data
         st.subheader("Dataset")
         url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv"
         data = pd.read_csv(url, usecols=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
@@ -120,7 +128,8 @@ with dataset:
         #image
         htp = "https://user-images.githubusercontent.com/95612783/167320268-1ba77f25-1c8a-47b0-87f3-cdb5692fd703.png"
         st.image(htp, width=None)
-        st.subheader("Input Variables")
+        #st.markdown("[Source: Iris Dataset project](https://medium.com/@sailajakonda2012/random-forest-classification-in-prediction-of-best-quality-wine-d0d7591a7c17)")
+        st.subheader("Definition of Input Variables")
         st.write("1. Fixed acidity (g(tartaric acid)/L): Primary fixed acids found in wine are tartaric, sussinic, citric and malic acids")
         st.write("2. Volatile acidity (g(acetic acid)/L): Are the gaseaous acids present in wine")
         st.write("3. Citric acid (g/L): It's weak organic acid found in citrus fruits naturally.")
@@ -136,11 +145,10 @@ with dataset:
         st.write("12. Quality( score between 0 and 10")
         st.subheader("Project Description")
         st.write("In this project, the model is trained to predict whether the wine is red or white solely from the atributes. As described below, the dataset contains 6479 input rows with 12 feature columns. In some columns, there are missing values. Fixed acidity, volatile acidity, citric acid, residual sugar, chloride, pH and sulphate columns have missing values 10, 8, 3, 2, 2, 9 and 4 respectively.")
-        #st.markdown("[Source: Iris Dataset project](https://medium.com/@sailajakonda2012/random-forest-classification-in-prediction-of-best-quality-wine-d0d7591a7c17)")
+        
         st.write("Wine Quality Dataset")
-
+        #data
         url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/winequality.csv"
-
         data = pd.read_csv(url, sep=',', usecols=[
             'type', 'fixed acidity', 'volatile acidity',
             'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
@@ -153,13 +161,19 @@ with dataset:
         st.image(htp, width=None)
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
         st.write("Iris Dataset")
-
+        st.subheader("Dataset Description")
+        st.markdown("This data sets consists of 3 different types of irises’ (Setosa, Versicolour, and Virginica) petal and sepal length")
+        st.markdown("The rows being the samples and the columns being: Sepal Length, Sepal Width, Petal Length and Petal Width.")
+        st.markdown("[Wikipedia: Iris Data](https://en.wikipedia.org/wiki/Iris_flower_data_set)")
+        #data
         url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/Iris.csv"
-
-        data = pd.read_csv(url, sep=',', usecols=['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])          
-    
+        data = pd.read_csv(url, sep=',', usecols=['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])
+        st.markdown("Data Source: [Kaggle Iris Species](https://www.kaggle.com/datasets/uciml/iris)
+    #-------------------------------------------------
     elif dataset_name == "Breast cancer":
         st.subheader("4. Breast cancer Dataset")
+        st.markdown("Breast cancer Dataset Descritption")
+        st.write("
         htp = "https://user-images.githubusercontent.com/95612783/167320495-04d70b78-2768-4c43-947a-9f15f11725be.png"
         st.image(htp, width=None)
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
@@ -606,7 +620,7 @@ with visualization:
 
         ax = sns.stripplot(x =df2['Label'], y =df2['length'], data=df2)
 
-        ax.set_title('Messages with length < 00')
+        ax.set_title('Messages with length < 200')
         st.pyplot(fig)
 
     #---------------------------------
