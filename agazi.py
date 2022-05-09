@@ -101,7 +101,7 @@ with header:
         st.markdown("**Step 1: Importing Data from Github**")
         st.write("The data of each dataset obtained from kaggle is saved on my github by commiting in a new resipotory created for this project. I found this to be more easy and practical than storing it in any other database cloud. It is public and can be accissible by [clicking here](https://github.com/TessRedie/mongostreamapp).")
         st.write("To upload the data, first click on the dataset you select. Then, show the raw data. From there a link will be provided which can be used as a url.")
-        st.markdown("With dataset:<mark style="color:blue">url = https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv"</mark>")
+        st.markdown("With dataset:<mark>url = https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv"</mark>")
     elif about_project == "Motivation":
         st.subheader("Motivation")
         st.write("You may wonder what motivates me to do this project, am I right? If so, this is a brief statement")
