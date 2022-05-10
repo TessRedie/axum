@@ -1,17 +1,19 @@
 
 #streamlit library
+from cProfile import Profile
 import streamlit as st
 #basic libraries
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
+import io
 import json
 #visualization libraries
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
-
+#from PySide6 import QtDataVisualization #Q3DScatter
 #libraries for text processing
 import nltk
 from nltk import FreqDist
@@ -62,6 +64,7 @@ from typing import Container, Text
 from xml.etree.ElementInclude import include
 
 #containers
+
 header = st.container()
 dataset = st.container()
 eda = st.container()
@@ -96,62 +99,60 @@ with header:
     if about_project =="Summary of the Project":
         st.header("About the project")
         st.write("In this ML project, I have tried to apply the skills I have learnt for the last 4 months. I believe that it will help for beginners. I have used public datasets. Originally from [Kaggle](https://www.kaggle.com/)Five datasets(Dolphins, Wine Quality, Iris, Breast cancer as well as Spam dataset) are used for training six models(SVM, KNN, Decision Tree Classifier, Gradient Boosting Classifier, Random Forest Classifier as well as Random Forest Regression). For every dataset, Explanatory Data Analysis(EDA), Data Visualization, Features engineering, model training and evaluations, as well as PCA are presented. It\'s my first experience.  Its purpose is mainly to share knowlegde and learn from the feedbacks. Therefore feel free to add your own inputs.")
-        st.subheader("Steps")
-        st.markdown("**Step 1: Importing Data from Github**")
-        st.write("The data of each dataset obtained from kaggle is saved on my github by commiting in a new resipotory created for this project. I found this to be more easy and practical than storing it in any other database cloud. It is public and can be accissible by [clicking here](https://github.com/TessRedie/mongostreamapp).")
-        st.write("To upload the data, first click on the dataset you select. Then, show the raw data. From there a link will be provided which can be used as a url.")
-        st.code('''With dataset:url = https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv''', language='python')
     elif about_project == "Motivation":
         st.subheader("Motivation")
         st.write("You may wonder what motivates me to do this project, am I right? If so, this is a brief statement")
         st.write("The popularity of Artificial Intelligence is soaring recently because of many factors. People are becoming more thirsty to train models so that a system or a program is able to think and learn from experiences and apply it for human benefits. AI applications are almost in every sector of our economy, social services and businesses. And, I'm not different. Joining the world of AI is giving me a unique experience. I have been dealing with data since early days of professional studies. I was trained to be a Surveying Engineer and then as an Agricultural Engineer. Data has been crucial throughout my studies. Nevertheless, it's only recently that I'm feeling more lean to data than ever before. This is because I found AI to be the best science to exploit data more efficiently for the intended purpose.")
         st.write("Saying that, my motivation to join the AI domain though in a haphazard way, I believe that it is an ambitious dream of more than two decades search for knowledge and skills pertaining to my passion and curiousty of data and data use. It's based on this curiousity driven endeavour that I feel encouraged to develop this ML website to deepen my experience.I hope you will find it useful.")
+st.subheader("Steps")
 with dataset:
+    st.subheader("Step 1: Data Import")
+    st.markdown("To understand and get familiar  with the data at hand as well as to generate information, [exploratory data](https://www.redandyellow.co.za/blog/exploratory-vs-explanatory-data-analysis/) analysis is implemented. These include:")
+    st.write("The data of each dataset obtained from kaggle is saved on my github by commiting in a new resipotory created for this project. I found this to be more easy and practical than storing it in any other database cloud. It is public and can be accissible by [clicking here](https://github.com/TessRedie/axum).")
+    st.write("To upload the data, first click on the dataset you select. Then, show the raw data. From there a link will be provided which can be used as a url.")
+    st.code('''Example: With dataset:url = https://raw.githubusercontent.com/TessRedie/axum/master/dolphins.csv''',language='python')
     if dataset_name == "Dolphins":
-        st.subheader("1. Dolphins Dataset")
+        st.markdown("**1. Dolphins Dataset**")
         htp = "https://user-images.githubusercontent.com/95612783/167320127-6a81873a-655a-4c7f-a852-a45b34ac7c1c.png"
         st.image(htp, width=None)
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         #data
-        st.subheader("Dataset")
         url = "https://raw.githubusercontent.com/TessRedie/axum/master/dolphins.csv"
         data = pd.read_csv(url, usecols=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
+        st.write(data) 
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
-        st.subheader("2. Wine Quality Dataset")
+        st.markdown("**2. Wine Quality Dataset**")
         st.markdown("Publically available, Wine Quality dataset is related to red and white wine variants. The dataset contains a total 6497 rows and 11 phsicochemical properties and 1 sensory characterstics(ranked from 0 to 10 scores) are used as input and out variables " )
         #image
         htp = "https://user-images.githubusercontent.com/95612783/167320268-1ba77f25-1c8a-47b0-87f3-cdb5692fd703.png"
         st.image(htp, width=None)
         #st.markdown("[Source: Iris Dataset project](https://medium.com/@sailajakonda2012/random-forest-classification-in-prediction-of-best-quality-wine-d0d7591a7c17)")
-        st.subheader("Definition of Input Variables")
-        st.write("1. Fixed acidity (g(tartaric acid)/L): Primary fixed acids found in wine are tartaric, sussinic, citric and malic acids")
-        st.write("2. Volatile acidity (g(acetic acid)/L): Are the gaseaous acids present in wine")
-        st.write("3. Citric acid (g/L): It's weak organic acid found in citrus fruits naturally.")
-        st.write("4. Residual sugar (g/L): Amount of sugar left after fermentation.")
-        st.write("5. Chlorides (g(sodium chloride)/L): Amount of salt present in wine.")
-        st.write("6. Free surfur dioxide (mg/L): SO2 is used for prevention of wine from oxidation and microbial spoilage.")
-        st.write("7. Total surfur dioxide (mg/L): ")
-        st.write("8. Density (g/mL): The density of wine ranges from 0.933 g/ML to 0.995 g/mL")
-        st.write("9. pH: The degree of wine acidity. It has a range between 2.9 4.2. Wine's chemical and biological properties are very dependent on pH value.")
-        st.write("10. Sulphates (g(potassium sulphate)/L)")
-        st.write("11. Alcohol (% vol: percent of alcohol present in wine.")
-        st.subheader("Output variable")
-        st.write("12. Quality( score between 0 and 10")
-        st.subheader("Project Description")
+        st.markdown("**Project Description**")
         st.write("In this project, the model is trained to predict whether the wine is red or white solely from the atributes. As described below, the dataset contains 6479 input rows with 12 feature columns. In some columns, there are missing values. Fixed acidity, volatile acidity, citric acid, residual sugar, chloride, pH and sulphate columns have missing values 10, 8, 3, 2, 2, 9 and 4 respectively.")
-        
-        st.write("Wine Quality Dataset")
         #data
         url = "https://raw.githubusercontent.com/TessRedie/axum/master/winequality.csv"
         data = pd.read_csv(url, sep=',', usecols=[
             'type', 'fixed acidity', 'volatile acidity',
             'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
-            'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality' ])    
+            'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality' ])
+        st.write(data) 
+        st.markdown("**Description of Variables**")
+        st.write("1. **Fixed acidity (g(tartaric acid)/L)**: Primary fixed acids found in wine are tartaric, sussinic, citric and malic acids")
+        st.write("2. **Volatile acidity (g(acetic acid)/L)**: Are the gaseaous acids present in wine")
+        st.write("3. **Citric acid (g/L)**: It's weak organic acid found in citrus fruits naturally.")
+        st.write("4. **Residual sugar (g/L)**: Amount of sugar left after fermentation.")
+        st.write("5. **Chlorides (g(sodium chloride)/L)**: Amount of salt present in wine.")
+        st.write("6. **Free surfur dioxide (mg/L)**: SO2 is used for prevention of wine from oxidation and microbial spoilage.")
+        st.write("7. **Total surfur dioxide (mg/L)**: ")
+        st.write("8. **Density (g/mL)**: The density of wine ranges from 0.933 g/ML to 0.995 g/mL")
+        st.write("9. **pH**: The degree of wine acidity. It has a range between 2.9 4.2. Wine's chemical and biological properties are very dependent on pH value.")
+        st.write("10. **Sulphates (g(potassium sulphate)/L)**")
+        st.write("11. **Alcohol (% vol)**: percent of alcohol present in wine.")
+        st.write("12. **Quality**: score between 0 and 10")
     #--------------------------------------------------------------
     elif dataset_name == "Iris":
         st.subheader("3. Iris Dataset")
-        st.markdown("")
         htp = "https://user-images.githubusercontent.com/95612783/167320462-60e1746d-9d3f-40b0-8b94-31a2e50d546a.png"
         st.image(htp, width=None)
         st.markdown("[Source: Iris Dataset project](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)")
@@ -164,42 +165,121 @@ with dataset:
         url = "https://raw.githubusercontent.com/TessRedie/axum/master/Iris.csv"
         data = pd.read_csv(url, sep=',', usecols=['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])
         st.markdown("Data Source: [Kaggle Iris Species](https://www.kaggle.com/datasets/uciml/iris)")
+        st.write(data) 
     #-------------------------------------------------
     elif dataset_name == "Breast cancer":
-        st.subheader("4. Breast cancer Dataset")
+        st.markdown("**4. Breast cancer Dataset**")
         st.markdown("Breast cancer Dataset Descritption")
         #st.write("
         htp = "https://user-images.githubusercontent.com/95612783/167320495-04d70b78-2768-4c43-947a-9f15f11725be.png"
         st.image(htp, width=None)
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
-
         url = "https://raw.githubusercontent.com/TessRedie/axum/master/Breast_cancer_data.csv"
-
         data = pd.read_csv(url, sep=',', usecols=['mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness', "diagnosis"])
-                
+        st.write(data) 
     #----------------------------------------------
     elif dataset_name == "Spam classifier":
-        st.subheader("5. Spam Classifier Dataset")
+        st.markdown("**5. Spam Classifier Dataset**")
         #image
         htp = "https://user-images.githubusercontent.com/95612783/167320523-c382e8b7-6261-444f-abe4-d260edd146bf.png"
         st.image(htp, width=None)
         url = "https://raw.githubusercontent.com/TessRedie/axum/master/spam.csv"
-
         data = pd.read_csv(url, sep=',', usecols=['v1','v2'], encoding='ISO:8859-1')
         data.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
         #st.write(data.columns)
         #data = data_spam[['Label','messages']]
-        data['label'] = data['Label'].apply(lambda x:1 if x=='spam' else 0)     
+        data['label'] = data['Label'].apply(lambda x:1 if x=='spam' else 0)
+        st.write(data) 
 #-----------------------------------------------------------------------------------------------------
 with eda:
-    st.write(data)
     #data shape
-    st.write("Shape of Dataset", data.shape)
+    st.subheader("Exploratory Data Analysis(EDA)")
+    st.write("EDA helps us to have a general over-view of the data. It is the basic and primary step performed in Machine Learning. These include exploring the data structure(shape), missing values, looking for duplicates, as well as data description.")
+    st.write("In this project some of the basic EDA operations are implemented. Each one of these EDA components are explained below. For further knowledge and details, please [check here](https://medium.com/data-folks-indonesia/10-things-to-do-when-conducting-your-exploratory-data-analysis-eda-7e3b2dfbf812)")
+    st.markdown("**a. Data Shape**")
+    st.markdown("The shape method in pandas returns a tuple representing the dimensions: **(rows, columns)** of the dataframe. The number of elements in the tuple returned is equal to the number of dimensions in the python object. For more details, please [click here](https://www.askpython.com/python-modules/pandas/shape-method)")
+    st.code('''Shape of Dataset: data.shape''', language='python')
+    st.code('''To explore the column names: columns = data.columns''', language='python')
+    st.markdown("Precleaning is the process of finding and correcting incorrect values that are present in the dataset that has a potential to incurr errors during model training. These include to identify missing values and duplicates.")
     #Missing values in an object columnn
-    st.write("Missing Data:", data.isnull().sum())
-    data.drop_duplicates(inplace = True)
-    st.write("Dataset Information:", data.describe())
+    st.markdown("**b. Missing Data**")
+    st.markdown("If there are missing data, most machine learning models generate errors if you pass NAN values into it. These becomes a problematic [to train the models](https://www.geeksforgeeks.org/working-with-missing-data-in-pandas/). To avoid these type of error, it is important to explore any missing value and then identify a strategy to replace it. The accuracy of the model can be affected significantly depending on the strategy choosen. For example, dropping all missing values can be the easiest strategy. But this can have a significant impact. Hence other strategies, such as replacing by mean values, can be applied. In this project, the strategy choosen will be explained later while preparing the data inputs to the model.")
+    st.markdown("In pandas, missing daata can be represented either as **None** or **NaN(Not a Number)*")
+    st.markdown("To obtain the missing data, the following operation is executed:")
+    st.code(''' Null values = isnull() or isnull().sum()''', language='python')
+    st.code('''Not Null values = notnull() or isnull().sum()''', language='python')
+    #dropping duplicated data
+    st.markdown("**c. Dropping Duplicates**")
+    st.markdown("If there are any duplicate rows and are not needed, they can be removed by executing pandas drop duplicates. This is helpful when unique rows are wanted. For further details, you can read [pd.df.drop_duplicates()]((https://dataindependent.com/pandas/pandas-drop-duplicates-pd-df-drop_duplicates/))")
+    st.code('''To drop duplicated apply: data.drop_duplicates()''', language='python')
+    #Data summary
+    st.markdown("**d. Data Description**")
+    st.markdown("To calculate statistical data like **percentile, mean & std** of the **numeric values**, ***data.describe()*** function is implemeneted. By doing so, details such as maximum values, min_values, mean, std,  percentile mean values(25%, 50%, 75%), and count of values for every column is provided. These statistical informations are necessary for preliminary data understanding analysis ")
+    st.code(''' Data Desciption: data.describe()''', language='python')
+    st.markdown("We can further define parameters based on the information expect to be described. For example, we can include or exclude numeric and non-numeric values. For further, you can read [Python Pandas - Descriptive Statistics](https://www.tutorialspoint.com/python_pandas/python_pandas_descriptive_statistics.htm)")
+    #data summary
+    if dataset_name == "Dolphins":
+        st.markdown("**Structure of Dolphin Dataset**")
+        st.write("Data Shape", data.shape)
+        st.write("The Dolphin Dataset is composed of 344 rows and 7 columns and the columns are indicated below")
+        st.markdown("**Dataset Information: columns, Non-null Count and Dtype**")
+        st.write("Dolphins dataset is composed of seven columns. Three columns (variety, area, sex) of object type while the rest are numeric(float64)")
+        #To display Data information in streamlit, https://discuss.streamlit.io/t/direct-the-output-of-df-info-to-web-page/14894
+        buffer = io.StringIO()
+        data.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+        #missing values
+        st.markdown("**Missing values from Dolphin Dataset**")
+        st.write("Missing Data:", data.isnull().sum())
+        data.drop_duplicates(inplace = True)
+        st.write("Data shape after duplicate drop", data.shape)
+        st.write("Dataset Information:", data.describe())
+    elif dataset_name == "Wine Quality":
+        st.markdown("**Structure of Wine Quality Dataset**")
+        st.write("Data Shape", data.shape)
+        buffer = io.StringIO()
+        data.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+        st.write("Missing Data summary:", data.isnull().sum())
+        data.drop_duplicates(inplace = True)
+        st.write("Data shape after duplicate drop", data.shape)
+        st.write("Dataset Information:", data.describe())
+    elif dataset_name == "Iris":
+        st.markdown("**Structure of Iris Dataset**")
+        st.write("Data Shape", data.shape)
+        buffer = io.StringIO()
+        data.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+        st.write("Missing Data summary:", data.isnull().sum())
+        data.drop_duplicates(inplace = True)
+        st.write("Data shape after duplicate drop", data.shape)
+        st.write("Dataset Information:", data.describe())
+    elif dataset_name =="Breast cancer":
+        st.markdown("**Structure of Breast cancer Dataset**")
+        st.write("Data Shape", data.shape)
+        buffer = io.StringIO()
+        data.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+        st.write("Missing Data summary:", data.isnull().sum())
+        data.drop_duplicates(inplace = True)
+        st.write("Data shape after duplicate drop", data.shape)
+        st.write("Dataset Information:", data.describe())
+    elif dataset_name =="Spam classifier":
+        st.markdown("**Structure of Spam classifier Dataset**")
+        st.write("Data Shape", data.shape)
+        buffer = io.StringIO()
+        data.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+        st.write("Missing Data summary:", data.isnull().sum())
+        data.drop_duplicates(inplace = True)
+        st.write("Data shape after duplicate drop", data.shape)
+        st.write("Dataset Information:", data.describe())
 #--------------------------------------------
 with visualization:
     st.write("To explain the data, graphic representation such as Histograms, pairplot, pivot, correlation maps and 3D plots are used. In each visualization, the dataset is studied  and plotted accordingly. In some datasets, there are missing values. These missing values are not considered while plotting. Histograms and pivot graphs are used to understand the distribution of data. Correlation maps are developed to understand the relationship between features.")
@@ -280,41 +360,53 @@ with visualization:
         st.plotly_chart(scatter_3D)
 #-------------------------------------------
     elif dataset_name=="Wine Quality":   
+
         st.subheader("Histogram Plot")
         fig, axs = plt.subplots(figsize=(12, 10))
         # Plot variable 1
         plt.subplot(3,4,1)
         ax1 = sns.histplot(data=data, x="fixed acidity", hue="type", kde=True)
+
         #Plot variable 2
         plt.subplot(3,4,2)
         ax1 = sns.histplot(data=data, x="volatile acidity", hue="type", kde=True)
+
         # Plot variable 3
         plt.subplot(3,4,3)
         ax1 = sns.histplot(data=data, x="citric acid", hue="type", kde=True)
+
         # Plot variable 4
         plt.subplot(3,4,4)
         ax1 = sns.histplot(data=data, x="residual sugar", hue="type", kde=True)
+        
         #Plot variable 5
         plt.subplot(3,4,5)
         ax1=sns.histplot(data=data,x="free sulfur dioxide", hue="type", kde=True)
+
         #Plot variable 6
         plt.subplot(3,4,6)
         ax1=sns.histplot(data=data,x="free sulfur dioxide", hue="type", kde=True)
+
         #Plot variable 7
         plt.subplot(3,4,7)
         ax1=sns.histplot(data=data,x="total sulfur dioxide", hue="type", kde=True)
+
         #Plot variable 8
         plt.subplot(3,4,8)
         ax1=sns.histplot(data=data,x="density", hue="type", kde=True)
+
         #Plot variable 9
         plt.subplot(3,4,9)
         ax1=sns.histplot(data=data,x="pH", hue="type", kde=True)
+
         #Plot variable 10
         plt.subplot(3,4,10)
         ax1=sns.histplot(data=data,x="sulphates", hue="type", kde=True)
+
         #Plot variable 11
         plt.subplot(3,4,11)
         ax1=sns.histplot(data=data,x="alcohol", hue="type", kde=True)
+
         #Plot variable 9
         plt.subplot(3,4,12)
         ax1=sns.histplot(data=data,x="quality", hue="type", kde=True)
@@ -322,9 +414,12 @@ with visualization:
         #--------------------------------------------
         #Violin Plot
         #--------------------------------------------
+
         st.subheader("Violin Plot")
-        st.markdown("Violin plot shows the concentration of data[for more details click this link](https://www.infinityinsight.com/blog/?p=357). ")               
+        st.markdown("Violin plot shows the concentration of data[for more details click this link](https://www.infinityinsight.com/blog/?p=357). ")        
+       
         fig = plt.figure(figsize=(12,10))
+
         plt.subplot(3,4,1)
         df1 = data[['fixed acidity']]
         sns.violinplot(data=df1, orient="v", scale="count", palette="spring", split=True)
@@ -597,7 +692,7 @@ with visualization:
 
         ax = sns.stripplot(x =df2['Label'], y =df2['length'], data=df2)
 
-        ax.set_title('Messages with length < 200')
+        ax.set_title('Messages with length < 00')
         st.pyplot(fig)
 
     #---------------------------------
@@ -1196,13 +1291,17 @@ with Parameters:
             params['verbose']=verbose
         elif classifier_name == "Random Forest Regressor":
             #n_estimators
-            n_estimators = st.sidebar.slider("Number of estimator", 0, 500, (10,50), 10)
-            params["n_estimators"]= n_estimators
+            n_estimators = st.sidebar.slider("Number of estimator", 0, 500, (10,50), 50)
+            n_estimators_step = st.sidebar.number_input("Steps", 10)
+            n_estimators_range = np.arange(n_estimators[0], n_estimators[1]+n_estimators_step, n_estimators_step)
+            params["n_estimators_range"]= n_estimators_range
 
             #max depth
 
-            max_depth = st.sidebar.slider("Maximum depth", 5, 15, (5,8), 1)
-            params["max_depth"]= max_depth
+            max_depth = st.sidebar.slider("Maximum depth", 5, 15, (5,8), 2)
+            max_depth_step=st.sidebar.number_input("Step size for max depht",1,3)
+            max_depth_range =np.arange(max_depth[0],max_depth[1]+max_depth_step, max_depth_step)
+            params["max_depth_range"]= max_depth_range
 
             #features
             max_features =st.sidebar.multiselect("Max Features (You can select multiple options)",["auto", "log2","sqrt"],["sqrt"])
@@ -1310,8 +1409,8 @@ with model:
         model = RandomForestRegressor(random_state=params["random_state"], bootstrap=params["bootstrap"], criterion=params["criterion"])
         param_grid = dict(
             max_features=params["max_features"],
-            n_estimators=params["n_estimators"],
-            max_depth=params["max_depth"],
+            n_estimators=params["n_estimators_range"],
+            max_depth=params["max_depth_range"],
             min_samples_split=params["min_samples_split"],
             min_samples_leaf=params["min_samples_leaf"])
     
@@ -1594,6 +1693,13 @@ elif dataset_name == "Spam classifier":
     plt.xlabel("Dimension 1")
     plt.ylabel("Dimension 2")
     st.pyplot(fig)
+
+#To add comments
+st.subheader("Please leave your comment here")
+from streamlit_disqus import st_disqus
+
+st_disqus("streamlit-disqus-demo")
+
 
     
 
