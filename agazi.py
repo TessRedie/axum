@@ -1694,12 +1694,6 @@ elif dataset_name == "Spam classifier":
     plt.ylabel("Dimension 2")
     st.pyplot(fig)
 
-#To add comments
-st.subheader("Please leave your comment here")
-from streamlit_disqus import st_disqus
-
-st_disqus("streamlit-disqus-demo")
-
 
     
 
