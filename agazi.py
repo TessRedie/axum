@@ -11,7 +11,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from PIL import Image
-#from PySide6 import QtDataVisualization #Q3DScatter
+
 #libraries for text processing
 import nltk
 from nltk import FreqDist
@@ -61,8 +61,7 @@ from telnetlib import SB
 from typing import Container, Text
 from xml.etree.ElementInclude import include
 
-#connect to postgresql database
-
+#containers
 header = st.container()
 dataset = st.container()
 eda = st.container()
@@ -115,7 +114,7 @@ with dataset:
         st.markdown("[Source: Key West Aquarium](https://www.keywestaquarium.com/dolphins-in-key-west)")
         #data
         st.subheader("Dataset")
-        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/dolphins.csv"
+        url = "https://raw.githubusercontent.com/TessRedie/axum/master/dolphins.csv"
         data = pd.read_csv(url, usecols=['variety','area','dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex'])
 #--------------------------------------------
     elif dataset_name == "Wine Quality":
@@ -144,7 +143,7 @@ with dataset:
         
         st.write("Wine Quality Dataset")
         #data
-        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/winequality.csv"
+        url = "https://raw.githubusercontent.com/TessRedie/axum/master/winequality.csv"
         data = pd.read_csv(url, sep=',', usecols=[
             'type', 'fixed acidity', 'volatile acidity',
             'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
@@ -162,7 +161,7 @@ with dataset:
         st.markdown("The rows being the samples and the columns being: Sepal Length, Sepal Width, Petal Length and Petal Width.")
         st.markdown("[Wikipedia: Iris Data](https://en.wikipedia.org/wiki/Iris_flower_data_set)")
         #data
-        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/Iris.csv"
+        url = "https://raw.githubusercontent.com/TessRedie/axum/master/Iris.csv"
         data = pd.read_csv(url, sep=',', usecols=['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm', 'Species'])
         st.markdown("Data Source: [Kaggle Iris Species](https://www.kaggle.com/datasets/uciml/iris)")
     #-------------------------------------------------
@@ -175,7 +174,7 @@ with dataset:
         st.markdown("[Source: Cancer Research UK](https://www.cancerresearchuk.org/about-cancer/breast-cancer/stages-types-grades/tnm-staging)")
         st.write("Breast Cancer Dataset")
 
-        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/Breast_cancer_data.csv"
+        url = "https://raw.githubusercontent.com/TessRedie/axum/master/Breast_cancer_data.csv"
 
         data = pd.read_csv(url, sep=',', usecols=['mean_radius', 'mean_texture', 'mean_perimeter', 'mean_area', 'mean_smoothness', "diagnosis"])
                 
@@ -185,7 +184,7 @@ with dataset:
         #image
         htp = "https://user-images.githubusercontent.com/95612783/167320523-c382e8b7-6261-444f-abe4-d260edd146bf.png"
         st.image(htp, width=None)
-        url = "https://raw.githubusercontent.com/TessRedie/mongostreamapp/master/spam.csv"
+        url = "https://raw.githubusercontent.com/TessRedie/axum/master/spam.csv"
 
         data = pd.read_csv(url, sep=',', usecols=['v1','v2'], encoding='ISO:8859-1')
         data.rename({'v1': 'Label', 'v2': 'messages'}, axis=1, inplace=True)
