@@ -1456,7 +1456,7 @@ with model_training:
         st.write("Mean Squared Error, MSE:", rnd_MSE)
         #Calculating the Root Mean Squared Error
         
-        st.subheader("Root Mean Square Errot, RMSE")
+        st.subheader("Root Mean Square Error, RMSE")
         st.markdown("[RMSE](https://www.sciencedirect.com/topics/engineering/root-mean-squared-error) is the standatd deviation of the residual(prediction errors. It measures how far the residuals are from the regresssion line data. In short, it shows how concentrated the data is around the line of best fit. When standarized observations($O_i$) are predictions($S_i$) are used as RMSE inputs, there is a direct relationship with the correlationn coefficient. For example, if the correlation is 1, the RMSE will be 0, because all of the points lie on the regression line and hence there is no error. ")
         st.latex(r'''
         RMSE = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (S_i-O_i)^{2}}
