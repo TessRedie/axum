@@ -1521,7 +1521,7 @@ from sklearn.inspection import permutation_importance
 from sklearn import svm
 
 with pca_data:
-    st.subheader(Step 7: "Principal Component Ananlysis(PCA)")
+    st.subheader("Step 7: Principal Component Ananlysis(PCA)")
 
     st.markdown("[Lerma, 2019](https://sites.math.northwestern.edu/~mlerma/papers/princcomp2d.pdf) defines Principal component analysis (PCA) as a mathematical procedure intended to replace a number of correlated variables with a new set of variables that are linearly uncorrelated. It's is an [unsupervised machine learning technique](https://machinelearningmastery.com/principal-component-analysis-for-visualization/). It can be used as a data preparation technique and vizualizing data. As  [PCA](https://en.wikipedia.org/wiki/Principal_component_analysis) allows to summarize the information content in the data tables by means of a smaller set of 'summary indices' that can be easily visualized and analyzed. It does and simplifies mathematical concepts such as standardization, covariance, eigenvectors and eigenvalues without focusing on how to compute them. One of its principal component is reduction of dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains the most information in large set. Hence it is an important approach to simplify the understanding about the dataset for machine learning. For more, [please click this link](https://builtin.com/data-science/step-step-explanation-principal-component-analysis)")
     st.markdown("Steps to compute PCA:")
