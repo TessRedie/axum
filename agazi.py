@@ -198,24 +198,24 @@ with eda:
     st.markdown("To understand and get familiar  with the data at hand as well as to generate information necessary for model training, [exploratory data](https://www.redandyellow.co.za/blog/exploratory-vs-explanatory-data-analysis/) analysis is implemented.")
     st.write("EDA helps us to have a general over-view of the data. It is the basic and primary step performed in Machine Learning. These include exploring the data structure(shape), missing values, looking for duplicates, as well as data description.")
     st.write("In this project some of the basic EDA operations are implemented. Each one of these EDA components are explained below. For further knowledge and details, please [check here](https://medium.com/data-folks-indonesia/10-things-to-do-when-conducting-your-exploratory-data-analysis-eda-7e3b2dfbf812)")
-    st.markdown("**a. Data Shape**")
+    st.markdown("**2.1. Data Shape**")
     st.markdown("The shape method in pandas returns a tuple representing the dimensions: **(rows, columns)** of the dataframe. The number of elements in the tuple returned is equal to the number of dimensions in the python object. For more details, please [click here](https://www.askpython.com/python-modules/pandas/shape-method)")
     st.code('''Shape of Dataset: data.shape''', language='python')
     st.code('''To explore the column names: columns = data.columns''', language='python')
     st.markdown("Precleaning is the process of finding and correcting incorrect values that are present in the dataset that has a potential to incurr errors during model training. These include to identify missing values and duplicates.")
     #Missing values in an object columnn
-    st.markdown("**b. Missing Data**")
+    st.markdown("**2.2. Missing Data**")
     st.markdown("If there are missing data, most machine learning models generate errors if you pass NAN values into it. These becomes a problematic [to train the models](https://www.geeksforgeeks.org/working-with-missing-data-in-pandas/). To avoid these type of error, it is important to explore any missing value and then identify a strategy to replace it. The accuracy of the model can be affected significantly depending on the strategy choosen. For example, dropping all missing values can be the easiest strategy. But this can have a significant impact. Hence other strategies, such as replacing by mean values, can be applied. In this project, the strategy choosen will be explained later while preparing the data inputs to the model.")
     st.markdown("In pandas, missing daata can be represented either as **None** or **NaN(Not a Number)*")
     st.markdown("To obtain the missing data, the following operation is executed:")
     st.code(''' Null values = isnull() or isnull().sum()''', language='python')
     st.code('''Not Null values = notnull() or isnull().sum()''', language='python')
     #dropping duplicated data
-    st.markdown("**c. Dropping Duplicates**")
+    st.markdown("**2.3. Dropping Duplicates**")
     st.markdown("If there are any duplicate rows and are not needed, they can be removed by executing pandas drop duplicates. This is helpful when unique rows are wanted. For further details, you can read [pd.df.drop_duplicates()]((https://dataindependent.com/pandas/pandas-drop-duplicates-pd-df-drop_duplicates/))")
     st.code('''To drop duplicated apply: data.drop_duplicates()''', language='python')
     #Data summary
-    st.markdown("**d. Data Description**")
+    st.markdown("**2.4. Data Description**")
     st.markdown("To calculate statistical data like **percentile, mean & std** of the **numeric values**, ***data.describe()*** function is implemeneted. By doing so, details such as maximum values, min_values, mean, std,  percentile mean values(25%, 50%, 75%), and count of values for every column is provided. These statistical informations are necessary for preliminary data understanding analysis ")
     st.code(''' Data Desciption: data.describe()''', language='python')
     st.markdown("We can further define parameters based on the information expect to be described. For example, we can include or exclude numeric and non-numeric values. For further, you can read [Python Pandas - Descriptive Statistics](https://www.tutorialspoint.com/python_pandas/python_pandas_descriptive_statistics.htm)")
@@ -283,8 +283,10 @@ with eda:
         st.write("Dataset Information:", data.describe())
 #--------------------------------------------
 with visualization:
+    st.subheader("2.5 Data Visualization")
     st.write("To explain the data, graphic representation such as Histograms, pairplot, pivot, correlation maps and 3D plots are used. In each visualization, the dataset is studied  and plotted accordingly. In some datasets, there are missing values. These missing values are not considered while plotting. Histograms and pivot graphs are used to understand the distribution of data. Correlation maps are developed to understand the relationship between features.")
     #"spring" = ['#78C850', '#F08030',  '#6890F0',  '#A8B820',  '#F8D030', '#E0C068', '#C03028', '#F85888', '#98D8D8']
+    st.subheader("Histogram")
     if dataset_name =="Dolphins":
         fig, axs = plt.subplots(figsize=(16, 10))
         # Plot variable 1
@@ -303,10 +305,6 @@ with visualization:
         #--------------------------------------------
         #pair plot
         fig = plt.figure(figsize=(10,6))
-        st.subheader("Features of Interest")
-        st.markdown("This part relates to the selection of features (i.e. variables or columns) that would have a positive impact on the goodness of fit of our prediction model. For this, the correlation matrix is exploited as insights for selection. It is expected that most correlated features to the variety will have a positive impact on the goodness of fit of our model.")
-        st.header("Data Visualization")
-        
         # Mean distribution graphic visualiation, violin plot
         # pair plot
         st.subheader("Pair plot")
@@ -352,6 +350,8 @@ with visualization:
         fig = plt.figure(figsize=(10,6))
         corr = data.select_dtypes(include=['float64', 'int64']).dropna().corr()
         st.write(corr)
+        st.subheader("Features of Interest")
+        st.markdown("This part relates to the selection of features (i.e. variables or columns) that would have a positive impact on the goodness of fit of our prediction model. For this, the correlation matrix is exploited as insights for selection. It is expected that most correlated features to the variety will have a positive impact on the goodness of fit of our model.")       
         st.markdown("Based on the correlation matrix, features are given below by order of interest :")
         features_interest = data.select_dtypes(include=['float64', 'int64']).dropna().corr().iloc[1].sort_values(ascending=False)#[1:].index
         st.write(features_interest)
@@ -418,7 +418,6 @@ with visualization:
 
         st.subheader("Violin Plot")
         st.markdown("Violin plot shows the concentration of data[for more details click this link](https://www.infinityinsight.com/blog/?p=357). ")        
-       
         fig = plt.figure(figsize=(12,10))
 
         plt.subplot(3,4,1)
@@ -494,6 +493,8 @@ with visualization:
         corr = data.dropna().corr()
         st.write(corr)
         #--------------------------------
+        st.subheader("Features of Interest")
+        st.markdown("This part relates to the selection of features (i.e. variables or columns) that would have a positive impact on the goodness of fit of our prediction model. For this, the correlation matrix is exploited as insights for selection. It is expected that most correlated features to the variety will have a positive impact on the goodness of fit of our model.")       
         st.markdown("Based on the correlation matrix, features are given below by order of interest :")
         features_interest = data.select_dtypes(include=['float64', 'int64']).dropna().corr().iloc[1].sort_values(ascending=False)#[1:].index
         st.write(features_interest)
@@ -518,14 +519,8 @@ with visualization:
         plt.subplot(2,2,4)
         ax1 = sns.histplot(data=data, x="PetalWidthCm", hue="Species", kde=True)
         st.pyplot(fig)
-
         #pair plot
-
         fig = plt.figure(figsize=(10,6))
-        st.subheader("Features of Interest")
-        st.markdown("This part relates to the selection of features (i.e. variables or columns) that would have a positive impact on the goodness of fit of our prediction model. For this, the correlation matrix is exploited as insights for selection. It is expected that most correlated features to the variety will have a positive impact on the goodness of fit of our model.")
-        st.header("Data Visualization")
-        
         # Mean distribution graphic visualiation, violin plot
         # pair plot
         st.subheader("Pair plot")
@@ -607,10 +602,6 @@ with visualization:
         #pair plot
 
         fig = plt.figure(figsize=(10,6))
-        st.subheader("Features of Interest")
-        st.markdown("This part relates to the selection of features (i.e. variables or columns) that would have a positive impact on the goodness of fit of our prediction model. For this, the correlation matrix is exploited as insights for selection. It is expected that most correlated features to the variety will have a positive impact on the goodness of fit of our model.")
-        st.header("Data Visualization")
-        
         # Mean distribution graphic visualiation, violin plot
         # pair plot
         st.subheader("Pair plot")
@@ -663,6 +654,8 @@ with visualization:
         fig = plt.figure(figsize=(10,6))
         corr = data.dropna().corr()
         st.write(corr)
+        st.subheader("Features of Interest")
+        st.markdown("This part relates to the selection of features (i.e. variables or columns) that would have a positive impact on the goodness of fit of our prediction model. For this, the correlation matrix is exploited as insights for selection. It is expected that most correlated features to the variety will have a positive impact on the goodness of fit of our model.")  
         st.markdown("Based on the correlation matrix, features are given below by order of interest :")
         features_interest = data.select_dtypes(include=['float64', 'int64']).dropna().corr().iloc[1].sort_values(ascending=False)#[1:].index
         st.write(features_interest)
@@ -698,7 +691,7 @@ with visualization:
 
     #---------------------------------
 with Preprocessing:
-    st.header("Preprocessing")
+    st.header("Step 3: Preprocessing")
     
     if dataset_name=="Dolphins":
         #Target dataset, y
@@ -1133,6 +1126,7 @@ with Preprocessing:
         transfo_num = Pipeline(steps=[('imputation', SimpleImputer(strategy='median')),('scaling', MinMaxScaler())])
 #---------------------------$
 with transformation:
+    st.subheader("Step 4: Model Data Preparation")
     #Encoder
     preparation = ColumnTransformer(transformers=[('data_cat', transfo_cat , column_cat),('data_num', transfo_num , column_num)])
     st.write(preparation)
@@ -1153,6 +1147,7 @@ with Train_test_split:
     st.write("X_train:", y_test.shape)
 #---------------------------------------
 with Parameters:
+    st.subheader("Model Parameters")
     params = dict()
     st.sidebar.subheader("Hyperparameters")
     st.subheader("Description of the Most Important parameters related terminologies")
@@ -1340,15 +1335,18 @@ with Parameters:
 
         return params
     params=add_parameters(classifier_name)
+    st.write(params)
     #st.write("Parameters:", params)
 
             #"References
             # 1. https://www.analyticsvidhya.com/blog/2021/12/ml-hyperparameter-optimization-app-using-streamlit/"
             # 2. https://www.analyticsvidhya.com/blog/2021/05/a-brief-introduction-to-building-interactive-ml-webapps-with-streamlit/
 with model:
+    st.subheader("Step 5: Models, Grid Search and Pipelines")
     if classifier_name == "KNN":
         st.subheader("KNeighbors Classifier Model")
         model = KNeighborsClassifier()
+        st.write(model)
         param_grid = dict(
             n_neighbors=params["K"])
 
@@ -1359,6 +1357,7 @@ with model:
     elif classifier_name == "SVM":
         st.subheader("Support Vector Machine Model")
         model = SVC()
+        st.write(model)
         param_grid=dict(
             C=params["C"],
             gamma=params["gamma"])
@@ -1371,6 +1370,7 @@ with model:
         st.subheader("Decision Tree Classifier Model")
         
         model = DecisionTreeClassifier(criterion=params["criterion"])
+        st.write(model)
         param_grid = dict(
             max_depth=params["max_depth"],
             min_samples_split=params["min_samples_split"],
@@ -1383,6 +1383,7 @@ with model:
     elif classifier_name == "Gradient Boosting Classifier":
         st.subheader("Gradient Boosting Classifier Model")
         model = GradientBoostingClassifier(criterion=params["criterion"])
+        st.write(model)
         param_grid = dict(
             max_depth=params["max_depth"],
             loss = params["loss"],
@@ -1397,6 +1398,7 @@ with model:
         st.subheader("Random Forest Classifier Model")
     #model
         model = RandomForestClassifier(random_state=params["random_state"], bootstrap=params["bootstrap"])
+        st.write(model)
         param_grid = dict(
             max_features=params["max_features"],
             n_estimators=params["n_estimators_range"],
@@ -1408,6 +1410,7 @@ with model:
     elif classifier_name == "Random Forest Regressor":
         st.subheader("Random Forest Regressor Model")
         model = RandomForestRegressor(random_state=params["random_state"], bootstrap=params["bootstrap"], criterion=params["criterion"])
+        st.write(model)
         param_grid = dict(
             max_features=params["max_features"],
             n_estimators=params["n_estimators_range"],
@@ -1430,6 +1433,7 @@ from sklearn import metrics
 from sklearn.metrics import RocCurveDisplay
 from sklearn.metrics import mean_squared_error
 with model_training:
+    st.subheader("Step 6: Model Training and Evaluation")
     if classifier_name == "Random Forest Regressor":
         #st.sidebar("Models")
         st.markdown("Make prediction for the pre-trained model")
@@ -1517,7 +1521,7 @@ from sklearn.inspection import permutation_importance
 from sklearn import svm
 
 with pca_data:
-    st.subheader("Principal Component Ananlysis(PCA)")
+    st.subheader(Step 7: "Principal Component Ananlysis(PCA)")
 
     st.markdown("[Lerma, 2019](https://sites.math.northwestern.edu/~mlerma/papers/princcomp2d.pdf) defines Principal component analysis (PCA) as a mathematical procedure intended to replace a number of correlated variables with a new set of variables that are linearly uncorrelated. It's is an [unsupervised machine learning technique](https://machinelearningmastery.com/principal-component-analysis-for-visualization/). It can be used as a data preparation technique and vizualizing data. As  [PCA](https://en.wikipedia.org/wiki/Principal_component_analysis) allows to summarize the information content in the data tables by means of a smaller set of 'summary indices' that can be easily visualized and analyzed. It does and simplifies mathematical concepts such as standardization, covariance, eigenvectors and eigenvalues without focusing on how to compute them. One of its principal component is reduction of dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains the most information in large set. Hence it is an important approach to simplify the understanding about the dataset for machine learning. For more, [please click this link](https://builtin.com/data-science/step-step-explanation-principal-component-analysis)")
     st.markdown("Steps to compute PCA:")
