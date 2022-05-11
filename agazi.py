@@ -108,8 +108,7 @@ with header:
 st.subheader("Steps")
 with dataset:
     st.subheader("Step 1: Data Discovery")
-    st.markdown("To understand and get familiar  with the data at hand as well as to generate information necessary for model training, [exploratory data](https://www.redandyellow.co.za/blog/exploratory-vs-explanatory-data-analysis/) analysis is implemented. These include:")
-    st.write("The data of each dataset obtained from kaggle is saved on my github by committing in a new resipotory created for this project. As a beginner, I found this to be more easy and practical. It's public and is accessible [here](https://github.com/TessRedie/axum).")
+    st.write("The data of each dataset obtained from kaggle is saved on my github by committing them in a new resipotory created for this project. As a beginner, I found this to be more easy and practical. It's public and is accessible [here](https://github.com/TessRedie/axum).")
     st.write("To upload the data, the required dataset was selected. Then, show the raw data. From there a link will be provided which can be used as a url.")
     st.code('''Example: url = https://raw.githubusercontent.com/TessRedie/axum/master/dolphins.csv''',language='python')
     if dataset_name == "Dolphins":
@@ -195,7 +194,8 @@ with dataset:
 #-----------------------------------------------------------------------------------------------------
 with eda:
     #data shape
-    st.subheader("Exploratory Data Analysis(EDA)")
+    st.subheader("Step 2: Exploratory Data Analysis(EDA)")
+    st.markdown("To understand and get familiar  with the data at hand as well as to generate information necessary for model training, [exploratory data](https://www.redandyellow.co.za/blog/exploratory-vs-explanatory-data-analysis/) analysis is implemented.")
     st.write("EDA helps us to have a general over-view of the data. It is the basic and primary step performed in Machine Learning. These include exploring the data structure(shape), missing values, looking for duplicates, as well as data description.")
     st.write("In this project some of the basic EDA operations are implemented. Each one of these EDA components are explained below. For further knowledge and details, please [check here](https://medium.com/data-folks-indonesia/10-things-to-do-when-conducting-your-exploratory-data-analysis-eda-7e3b2dfbf812)")
     st.markdown("**a. Data Shape**")
