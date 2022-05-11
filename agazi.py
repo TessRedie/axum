@@ -703,25 +703,18 @@ with Preprocessing:
         #Features
         st.subheader('Features Dataset')
         X = data.drop(columns='variety')
-
         st.write("Features", X.shape)
-
         #columns
         columns = ['variety', 'area', 'dimension_1_mm', 'dimension_2_mm', 'dimension_3_mm', 'mass_g', 'sex']
-
         #selection of variables
         #selection of categories variable
         column_cat = X.select_dtypes(include=['object']).columns
         #column_cat
-        
         transfo_cat = Pipeline(steps=[('imputation', SimpleImputer(strategy='most_frequent')),('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))])
-        
-
         #selection of numeric variables        
         column_num = X.select_dtypes(exclude=['object']).columns
         #column_num
         transfo_num = Pipeline(steps=[('imputation', SimpleImputer(strategy='median')),('scaling', MaxAbsScaler())])
-       
     #----------------------------------------
     elif dataset_name == "Wine Quality":
         #Target
@@ -735,26 +728,20 @@ with Preprocessing:
         st.subheader('Preprocessing for Features Dataset variables')
         X = data.drop(columns='type')
         st.write("Features", X.shape)
-
         #columns
         columns = [
             'type', 'fixed acidity', 'volatile acidity',
             'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide',
             'total sulfur diioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality' ]
-
         #selection of variables
         #selection of categories variable
         column_cat = X.select_dtypes(include=['object']).columns
-
         #column category transformation
-        transfo_cat = Pipeline(steps=[('imputation', SimpleImputer(strategy='most_frequent')),('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))])
-        
-        
+        transfo_cat = Pipeline(steps=[('imputation', SimpleImputer(strategy='most_frequent')),('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))])      
         #selection of numeric variables        
         column_num = X.select_dtypes(exclude=['object']).columns
         #column_num
-        transfo_num = Pipeline(steps=[('imputation', SimpleImputer(strategy='median')),('scaling', MinMaxScaler())])
-        
+        transfo_num = Pipeline(steps=[('imputation', SimpleImputer(strategy='median')),('scaling', MinMaxScaler())])  
     #-----------------------------------
     elif dataset_name=="Iris":
         st.subheader("Preprocessing for Target, y")
@@ -829,145 +816,99 @@ with Preprocessing:
 
         features_regex={'Features':['tel_num_3', 'tel_num_5', 'tel_num_10', 'tel_num_11', 'money_pound', 'money_dollar', 'special_char', 'emails', 'dates1', 'dates2'],
         'Regex_char':['\d{3}', '\d{5}', '\d{3} \d{3} \d{4}', '\d{11}', '£\d+', '\$\d+', '&lt;#&gt;', '[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}', '\d+\s\w+\s\d+', '\d+/\d+/\d']}
-        data_features = pd.DataFrame(features_regex)
-                
+        data_features = pd.DataFrame(features_regex)               
         st.table(data_features)
         #phone numbers, with 3 digits
-
         #Digits 3, commonly used for text messaging
         tel_num_3 = data['messages'].str.contains("\d{3}")
         data['tel_num_3'] = 1*tel_num_3
-
         #Digits 5
         tel_num_5 = data['messages'].str.contains("\d{5}")
         data['tel_num_5'] = 1*tel_num_5
-
         #Digits 10
         tel_num_10 = data['messages'].str.contains('\d{3} \d{3} \d{4}')
         data['tel_num_10'] = 1*tel_num_10
-
         #Digits 11
         tel_num_11 = data['messages'].str.contains(('\d{11}'))
         data['tel_num_11'] = 1*tel_num_11
-
         #Asking for money
         #asking for money, "[^a-z].*£(\d+)"
-
         money_pound = data['messages'].str.contains("£\d+")
         data['money_pound'] = 1*money_pound
-
         money_dollar = data['messages'].str.contains("\$\d+")
         data['money_dollar'] = 1*money_dollar
-
         #Mixed Special characters commonly visible
         special_char = data['messages'].str.contains('&lt;#&gt;')
         data['special_char'] = 1*special_char
-
         #emails [\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}
         emails = data['messages'].str.contains("[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}")
         data['emails'] = 1*emails
-
         #Dates (\d+\s\w+\s\d+)
         dates1 = data['messages'].str.contains("\d+\s\w+\s\d+")
         data['dates1'] = 1*dates1
-
         #Dates "\d+/\d+/\d"
         dates2 = data['messages'].str.contains("\d+/\d+/\d")
         data['dates2'] = 1*dates2
-
         st.subheader("Spam Text Processing")
-
         #Spam messages
         spams = data.loc[data['Label']=='spam', :]
         #st.write("Spam messages and their features:", spams.head())
 
         #Remove punctuations
-
         #Download the stopwords package
-
         nltk.download('stopwords')
-
         #download punctuation package
-
         nltk.download('punkt')
-
         #download wordnet package
-
         nltk.download('wordnet')
-
         #punctuations
         punctuations = string.punctuation
-
         #defining the function to remove punctuation
-
         def remove_punctuation(text):
             punctuationfree="".join([i for i in text if i not in punctuations])
             return punctuationfree
-
         #storing the puntuation free text
-
         clean_spam1 = spams['messages'].apply(lambda x:remove_punctuation(x))
         #spams['Text_nonpunc']
-
         #Removing stop words from the spam text
         #defining the function to remove stopwords from tokenized text
-
-        def remove_stopwords(txt):
-            
+        def remove_stopwords(txt):           
             stoplist = nltk.corpus.stopwords.words('english')
-
             output =' '.join([word for word in txt.split() if word not in stoplist])
             return output
-
         ##applying the stopword function
-
         clean_spam1 = clean_spam1.apply(lambda x:remove_stopwords(x))
         #spams['clean_text'].head()
-
         #split words to columns
-
         splitwords = [nltk.word_tokenize(str(sentence)) for sentence in clean_spam1]
         #splitwords
-
-        st.subheader("Word Cloud Vizualisation")
-        
+        st.subheader("Word Cloud Vizualisation")      
         #Libraries
         #--------------------------
-
         from io import StringIO
         import matplotlib as mpl 
         from matplotlib.pyplot import figure
         from matplotlib import rcParams
         from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
         #--------------------------------
-
         #bank of words, bows
-
         bows = [nltk.word_tokenize(str(word)) for word in clean_spam1]
-        #bows[0:2], #example for row[index = ['':'']
-        
+        #bows[0:2], #example for row[index = ['':'']     
         #word counts
         counts = [len(words) for words in bows]
-
         #char_length
         char_length =clean_spam1.apply(len)
-
         #word cloud
         st.subheader("Word Cloud visualization")
-
         df = data
         column = clean_spam1
         numWords = counts
-
         def wordCloudFunction(df,column,numWords):
             topic_words = [ z.lower() for y in
                             [ x.split() for x in clean_spam1 if isinstance(x, str)]
-                            for z in y]
-            
-            word_count_dict = dict(Counter(topic_words))
-            
-            popular_words = sorted(word_count_dict, key = word_count_dict.get, reverse = True)
-            
+                            for z in y]         
+            word_count_dict = dict(Counter(topic_words))           
+            popular_words = sorted(word_count_dict, key = word_count_dict.get, reverse = True)           
             popular_words_nonstop = [w for w in popular_words if w not in stopwords.words("english")]
             word_string=str(popular_words_nonstop)
             
@@ -977,31 +918,22 @@ with Preprocessing:
             plt.imshow(wordcloud)
             plt.axis('off')
             plt.show()
-
             #spam word cloud, 1000 words
-
         fig = plt.figure(figsize=(15,15))
         wordCloudFunction(clean_spam1,'title',1000)
         st.pyplot(fig)
-
         st.subheader("Top Most Frequent spam words ")
-
         from collections import Counter
-
         df = data
         column =clean_spam1
 
         def wordBarGraphFunction(df,column,title):
             topic_words = [ z.lower() for y in
                         [x.split() for x in clean_spam1 if isinstance(x, str)]
-                            for z in y]
-            
-            word_count_dict = dict(Counter(topic_words))
-            
-            popular_words = sorted(word_count_dict, key = word_count_dict.get, reverse = True)
-            
-            popular_words_nonstop = [w for w in popular_words if w not in stopwords.words("english")]
-            
+                            for z in y]          
+            word_count_dict = dict(Counter(topic_words))            
+            popular_words = sorted(word_count_dict, key = word_count_dict.get, reverse = True)        
+            popular_words_nonstop = [w for w in popular_words if w not in stopwords.words("english")]            
             plt.barh(range(50), [word_count_dict[w] for w in reversed(popular_words_nonstop[0:50])]) #30 top most common words
             plt.yticks([x + 0.5 for x in range(50)], reversed(popular_words_nonstop[0:50]))
             plt.title(title)
@@ -1009,7 +941,6 @@ with Preprocessing:
         fig = plt.figure(figsize=(10,10))
         wordBarGraphFunction(clean_spam1,'title',"Top most frequent spam words")
         st.pyplot(fig)
-
         #creating additional features from the most frequent words
         st.subheader("Features Creation: Top 20 Most Frequent word")
         data['call'] = data['messages'].apply(lambda x: 1 if r"call" in x else 0 )
@@ -1044,28 +975,20 @@ with Preprocessing:
         st.write("Ham Dataset")
         df_ham = data.loc[data['Label']=='ham', :]
         st.write("Ham Dataset Shape:", df_ham.shape)
-
         #Creation of balanced data
         st.subheader("Balancing Data, Downsampling")
         st.markdown("As there could be bias in the dataset of the given data sample, due to major difference, downsampling technique is applied. Downsampling is performed to reduce the number of samples that is expected to have a bias class. This arises mainly because of high differences between the sample classes. Hence, downsampling is a technique where the majority class is downsampled to match minority class.")
         st.markdown("It is calculated by $ minority(spam) values/(majority(ham) values*100% $")
         st.markdown("Percentage of the target data, spam")
         # Percentage of data to be balanced- spam by downsampling
-
-        #ham_data and spam_data shape[] are used for calculating Percentage
-        
+        #ham_data and spam_data shape[] are used for calculating Percentage       
         Perc_spam = (df_spam.shape[0]/df_ham.shape[0])*100 #Perc_spam = Percentage of spam, in %
         st.write('Spam Percentage:', Perc_spam)
-
         # downsampling ham dataset - Equal to the '%' of spam
         df_ham_downsampled = df_ham.sample(df_spam.shape[0])
-
         # concating both dataset - df_spam and df_ham_balanced to create df_balanced dataset
         #50-50
-
-        df_perc = pd.concat([df_spam , df_ham_downsampled]) #Balanced Data df_balanced  = df
-        
-        
+        df_perc = pd.concat([df_spam , df_ham_downsampled]) #Balanced Data df_balanced  = df        
         #dataset after downsampling. This data is used as an input for model training
         st.write("Dataset with created features(50%\ spam, 50%\Hamp):", df_perc.head()) 
 #-------------------------------
@@ -1077,13 +1000,11 @@ with Preprocessing:
         st.pyplot(fig)
 #---------------------------------
         st.subheader("Features with most Importance")
-
         corr = df_perc.select_dtypes(include=['float64', 'int64']).dropna().corr()
         st.write(corr)
         st.markdown("Based on the correlation matrix, features are given below by order of interest :")
         features_interest = df_perc.select_dtypes(include=['float64', 'int64']).dropna().corr().iloc[1].sort_values(ascending=False)#[1:].index
         #sns.barplot(y=all_features, x=importance)
-
         st.write(features_interest)
 #---------------------------------
         #Target dateset, y
@@ -1093,33 +1014,26 @@ with Preprocessing:
         lb_encod = LabelEncoder()
         y = lb_encod.fit_transform(y)
         st.write("Target", y)
-
         #Transformation
         #Features
         st.subheader('Preprocessing of Features Dataset variables')
         X = df_perc.drop(columns=['label', 'length', 'messages'])
         st.write("Features", X.shape)
-
         #3D Scatter plot
         st.subheader("3D Scatter Plot")
-
         fig = plt.figure(figsize=(10,6))
         st.markdown("3-D representation to show how the data may be correlated to multiple features.")
         scatter_3D = px.scatter_3d(df_perc, x="call", y="tel_num_3", z="label", hover_name="money_pound", color="txt", width=1000, height=800)
         st.plotly_chart(scatter_3D)
-
         #columns
         columns = ['label','length', 'tel_num_3', 'tel_num_5', 'tel_num_10', 'tel_num_11', 'money_pound', 'money_dollar', 'special_char', 'emails', 'dates1', 'dates2', 'call', 'free', 'txt', 'text', 'urgent', 'new', 'reply', 'prize', 'get', 'claim', 'contact', 'win', 'cash', 'phone', 'service', 'guaranteed', 'awarded']
 
         #selection of variables
         #selection of categories variable
         column_cat = X.select_dtypes(include=['object']).columns
-
-        #column category transformation
-                
+        #column category transformation                
         transfo_cat = Pipeline(steps=[('imputation', SimpleImputer(strategy='most_frequent')),('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))])
-        #col_cat = ColumnTransformer(['transfo_cat', ])
-        
+        #col_cat = ColumnTransformer(['transfo_cat', ])        
         #selection of numeric variables        
         column_num = X.select_dtypes(exclude=['object']).columns
         #column_num
@@ -1132,15 +1046,11 @@ with transformation:
     st.write(preparation)
 #---------------------------
 with Train_test_split:
-    st.subheader("Data Initiation: Train test split")
-    
+    st.subheader("Data Initiation: Train test split")    
     # features_test_data = 20%(X); target_test_data = 20%(y)
-
     X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.20, random_state = 42, stratify=y)
-
     # Train-Test dataset
     st.subheader("Train_test Dataset")
-
     st.write("X_train:", X_train.shape)
     st.write("X_test:", X_test.shape)
     st.write("y_train:", y_train.shape)
@@ -1170,23 +1080,19 @@ with Parameters:
             n_jobs = st.sidebar.select_slider("Number of jobs to run in parallel (n_jobs)", options=[1,-1])
             params["n_jobs"]= n_jobs
             verbose = st.sidebar.slider("Verbose value", 1,2,3,4)
-            params['verbose']=verbose            
-               
+            params['verbose']=verbose                        
         elif classifier_name == "SVM":
                 #C = st.sidebar.slider("C", 0.01,10.0)
             C = st.sidebar.slider("C (Regularization parameter)", 0.01, 10.0, (0.01, 10.0), 2.0)
-            params["C"]= C
-        
+            params["C"]= C        
             #kernel = st.sidebar.radio(label="Kernel", options=["rbf", "linear"], key="kernel")
             #params["kernel"]= kernel
             gamma = st.sidebar.slider("Gamma (Kernal coefficient", 0.0001,1.0, (0.0001,1.0), 0.05)
             params["gamma"]= gamma
-
             n_jobs = st.sidebar.select_slider("Number of jobs to run in parallel (n_jobs)", options=[1,-1])
             params["n_jobs"]= n_jobs
             verbose = st.sidebar.slider("Verbose value", 1,2,3,4)
-            params['verbose']=verbose
-            
+            params['verbose']=verbose           
         elif classifier_name == "Decision Tree Classifier":
             max_depth = st.sidebar.slider("Maximum depth", 3,10, (3,10), 1)
             params["max_depth"] = max_depth
@@ -1244,13 +1150,10 @@ with Parameters:
             n_jobs = st.sidebar.select_slider("Number of jobs to run in parallel (n_jobs)", options=[1,-1])
             params["n_jobs"]= n_jobs
             verbose = st.sidebar.slider("Verbose value", 1,2,3,4)
-            params['verbose']=verbose
-
-            
+            params['verbose']=verbose       
     #----------------------------------------
             #Random Forest classifier
         elif classifier_name == "Random Forest Classifier":
-
             n_estimators = st.sidebar.slider("Number of estimator", 0, 500, (10,50), 50)
             n_estimators_step = st.sidebar.number_input("Steps", 10)
             n_estimators_range = np.arange(n_estimators[0], n_estimators[1]+n_estimators_step, n_estimators_step)
@@ -1261,16 +1164,12 @@ with Parameters:
             max_depth_step=st.sidebar.number_input("Step size for max depht",1,3)
             max_depth_range =np.arange(max_depth[0],max_depth[1]+max_depth_step, max_depth_step)
             params["max_depth_range"]= max_depth_range
-
-            #max_depth = st.sidebar.slider("The maximum depth of tree", 1, 15)
-            
+            #max_depth = st.sidebar.slider("The maximum depth of tree", 1, 15)          
             max_features =st.sidebar.multiselect("Max Features (You can select multiple options)",["auto", "sqrt", "log2"],["auto"])
             params["max_features"]= max_features
             st.sidebar.write("---")
             criterion = st.sidebar.select_slider("criterion", options=("gini", "entropy"))
             params["criterion"]= criterion
-            
-
             cv=st.sidebar.slider("Number of Cross validation split", 2, 10)
             params["cross_validation"]= cv
 
@@ -1291,7 +1190,6 @@ with Parameters:
             n_estimators_step = st.sidebar.number_input("Steps", 10)
             n_estimators_range = np.arange(n_estimators[0], n_estimators[1]+n_estimators_step, n_estimators_step)
             params["n_estimators_range"]= n_estimators_range
-
             #max depth
 
             max_depth = st.sidebar.slider("Maximum depth", 5, 15, (5,8), 2)
@@ -1302,42 +1200,31 @@ with Parameters:
             #features
             max_features =st.sidebar.multiselect("Max Features (You can select multiple options)",["auto", "log2","sqrt"],["sqrt"])
             params["max_features"]= max_features
-
             criterion = st.sidebar.select_slider("criterion", options=("mse", "mae")) #mse=mean squared error, mae=mean absolute error
             params["criterion"]= criterion
-
             #min samples split
             min_samples_split = st.sidebar.slider("Minimum samples split", 2,8, (2,8), 2) #array
             params["min_samples_split"] = min_samples_split
-
             #min samples leafs
             min_samples_leaf = st.sidebar.slider("Minimum samples leaf", 1,4, (1,4), 1)
             params["min_samples_leaf"] = min_samples_leaf
-
             #cross validation
-
             cv=st.sidebar.slider("Number of Cross validation split", 2, 10)
             params["cross_validation"]= cv
-
             #random state
-
             random_state = st.sidebar.slider("Seed number (random_state)", 0, 1000, 42, 1)
             params["random_state"]= random_state
-
             #boot strap
             bootstrap=st.sidebar.select_slider("Bootstrap", options=[True, False])
             params["bootstrap"]= bootstrap
-
             n_jobs = st.sidebar.select_slider("Number of jobs to run in parallel (n_jobs)", options=[1,-1])
             params["n_jobs"]= n_jobs
             verbose = st.sidebar.slider("Verbose value", 1,2,3,4)
             params['verbose']=verbose
-
         return params
     params=add_parameters(classifier_name)
-    st.write(params)
+    st.write("Hyperparameters:", params)
     #st.write("Parameters:", params)
-
             #"References
             # 1. https://www.analyticsvidhya.com/blog/2021/12/ml-hyperparameter-optimization-app-using-streamlit/"
             # 2. https://www.analyticsvidhya.com/blog/2021/05/a-brief-introduction-to-building-interactive-ml-webapps-with-streamlit/
@@ -1346,31 +1233,26 @@ with model:
     if classifier_name == "KNN":
         st.subheader("KNeighbors Classifier Model")
         model = KNeighborsClassifier()
-        st.write(model)
+        st.write("Model", model)
         param_grid = dict(
             n_neighbors=params["K"])
-
         st.subheader("Grid Search")    
         grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=params["n_jobs"], verbose=params['verbose'])
-        st.write("Grid Search:", grid)
-        
+        st.write("Grid Search:", grid)        
     elif classifier_name == "SVM":
         st.subheader("Support Vector Machine Model")
         model = SVC()
-        st.write(model)
+        st.write("Model", model)
         param_grid=dict(
             C=params["C"],
-            gamma=params["gamma"])
-        
+            gamma=params["gamma"])        
         st.subheader("Grid Search")    
         grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=params["n_jobs"], verbose=params['verbose'])
-        st.write("Grid Search:", grid)
-       
+        st.write("Grid Search:", grid)      
     elif classifier_name == "Decision Tree Classifier":
-        st.subheader("Decision Tree Classifier Model")
-        
+        st.subheader("Decision Tree Classifier Model")       
         model = DecisionTreeClassifier(criterion=params["criterion"])
-        st.write(model)
+        st.write("Model", model)
         param_grid = dict(
             max_depth=params["max_depth"],
             min_samples_split=params["min_samples_split"],
@@ -1383,7 +1265,7 @@ with model:
     elif classifier_name == "Gradient Boosting Classifier":
         st.subheader("Gradient Boosting Classifier Model")
         model = GradientBoostingClassifier(criterion=params["criterion"])
-        st.write(model)
+        st.write("Model", model)
         param_grid = dict(
             max_depth=params["max_depth"],
             loss = params["loss"],
@@ -1398,35 +1280,32 @@ with model:
         st.subheader("Random Forest Classifier Model")
     #model
         model = RandomForestClassifier(random_state=params["random_state"], bootstrap=params["bootstrap"])
-        st.write(model)
+        st.write("Model", model)
         param_grid = dict(
             max_features=params["max_features"],
             n_estimators=params["n_estimators_range"],
             max_depth=params["max_depth_range"])
-
         st.subheader("Grid Search")    
         grid = GridSearchCV(estimator=model, param_grid=param_grid, cv=params["cross_validation"], n_jobs=params["n_jobs"], verbose=params['verbose'])
         st.write("Grid Search:", grid)         
     elif classifier_name == "Random Forest Regressor":
         st.subheader("Random Forest Regressor Model")
         model = RandomForestRegressor(random_state=params["random_state"], bootstrap=params["bootstrap"], criterion=params["criterion"])
-        st.write(model)
+        st.write("Model", model)
         param_grid = dict(
             max_features=params["max_features"],
             n_estimators=params["n_estimators_range"],
             max_depth=params["max_depth_range"],
             min_samples_split=params["min_samples_split"],
-            min_samples_leaf=params["min_samples_leaf"])
-    
+            min_samples_leaf=params["min_samples_leaf"])   
         st.subheader("Grid Search")    
         grid = GridSearchCV(estimator=model, param_grid=param_grid, cv=params["cross_validation"], n_jobs=params["n_jobs"], verbose=params['verbose'])
-        st.write("Grid Search:", grid)
-        
+        st.write("Grid Search:", grid)        
 #-------------------------------------------
 with pipeline:
     pipe = Pipeline(steps=[('preprocessor', ColumnTransformer(remainder='passthrough', transformers=[('data_cat', transfo_cat , column_cat),('data_num', transfo_num , column_num)])), ('classifier', grid)])
-    st.write(pipe)
-    
+    st.subheader("Pipeline")
+    st.write("Pipeline", pipe) 
 #--------------------------------------
 #from mlxtend.plotting import plot_confusion_matrix
 from sklearn import metrics
@@ -1439,23 +1318,19 @@ with model_training:
         st.markdown("Make prediction for the pre-trained model")
         pipe.fit(X_train, y_train)
         y_pred = pipe.predict(X_test)
-        st.write("Prediction", y_pred)
-        
+        st.write("Prediction", y_pred)      
         #Evaluation
         st.subheader("Calculating Error")
-        #y_pred = pipe.predict(X_test)
-        
+        #y_pred = pipe.predict(X_test)       
         st.subheader("Mean Square Error, MSE")
         st.markdown("MSE is the most common loss function. It's defined as Mean or average of the square of the difference between actual and estimated values. MSE is used to check how close predictions are to actual values and hence it ensures the trained model to have no outlier predictions with significant errors. Its equation is as given below. For further readings, [please click here](https://www.mygreatlearning.com/blog/mean-square-error-explained/).")
         st.latex('''
         MSE = frac{1}{n}\sum_{i=1}^{n}(y_i-y_i^{-})²
         ''')
         st.write("For the model applied, the value obtained is:")
-
         rnd_MSE = mean_squared_error(y_test, y_pred)
         st.write("Mean Squared Error, MSE:", rnd_MSE)
-        #Calculating the Root Mean Squared Error
-        
+        #Calculating the Root Mean Squared Error        
         st.subheader("Root Mean Square Error, RMSE")
         st.markdown("[RMSE](https://www.sciencedirect.com/topics/engineering/root-mean-squared-error) is the standatd deviation of the residual(prediction errors. It measures how far the residuals are from the regresssion line data. In short, it shows how concentrated the data is around the line of best fit. When standarized observations($O_i$) are predictions($S_i$) are used as RMSE inputs, there is a direct relationship with the correlationn coefficient. For example, if the correlation is 1, the RMSE will be 0, because all of the points lie on the regression line and hence there is no error. ")
         st.latex(r'''
@@ -1466,16 +1341,14 @@ with model_training:
 
         st.subheader("Accuracy, Precision and Recall")
         accuracy = pipe.score(X_test, y_test)
-        st.write("Accuracy:", accuracy.round(2))
-                
+        st.write("Accuracy:", accuracy.round(2))               
     else: 
             #st.sidebar("Models")
         st.markdown("Make prediction for the pre-trained model")
         pipe.fit(X_train, y_train)
         st.subheader("Model prediction")
         y_pred = pipe.predict(X_test)
-        st.write("Prediction:", y_pred)
-    
+        st.write("Prediction:", y_pred)   
         #Matric confusion
         st.subheader("Matrix Confusion")
         fig = plt.figure()
@@ -1488,11 +1361,9 @@ with model_training:
         plt.tight_layout()
         plt.savefig('classification_1.png', dpi=300)
         st.pyplot(fig)
-
         #Evaluation
         st.subheader("Calculating Error")
-        #y_pred = pipe.predict(X_test)
-        
+        #y_pred = pipe.predict(X_test)      
         st.subheader("Mean Square Error, MSE")
         st.markdown("MSE is the most common loss function. It's defined as Mean or average of the square of the difference between actual and estimated values. MSE is used to check how close predictions are to actual values and hence it ensures the trained model to have no outlier predictions with significant errors. Its equation is as given below. For further readings, [please click here](https://www.mygreatlearning.com/blog/mean-square-error-explained/).")
         st.latex(r'''MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\bar y_i)²''')
@@ -1506,23 +1377,18 @@ with model_training:
         st.latex(r'''RMSE = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (S_i-O_i)^{2}}''')
         rnd_RMSE = np.sqrt(rnd_MSE)
         st.write("Root Mean Squared Error, RMSE:", rnd_RMSE)
-
-
         st.subheader("Accuracy, Precision and Recall")
         accuracy = pipe.score(X_test, y_test)
         st.write("Accuracy:", accuracy.round(2))
         st.write("Precision: ", precision_score(y_test, y_pred, average='weighted').round(2))
         st.write("Recall: ", recall_score(y_test, y_pred,average='weighted').round(2))
         #classification Report
-        #st.write(metrics.classification_report (y_test, np.argmax(y_pred, axis = 1))) 
-         
+        #st.write(metrics.classification_report (y_test, np.argmax(y_pred, axis = 1)))        
 #------------------------------------------------------------
 from sklearn.inspection import permutation_importance  
 from sklearn import svm
-
 with pca_data:
     st.subheader("Step 7: Principal Component Ananlysis(PCA)")
-
     st.markdown("[Lerma, 2019](https://sites.math.northwestern.edu/~mlerma/papers/princcomp2d.pdf) defines Principal component analysis (PCA) as a mathematical procedure intended to replace a number of correlated variables with a new set of variables that are linearly uncorrelated. It's is an [unsupervised machine learning technique](https://machinelearningmastery.com/principal-component-analysis-for-visualization/). It can be used as a data preparation technique and vizualizing data. As  [PCA](https://en.wikipedia.org/wiki/Principal_component_analysis) allows to summarize the information content in the data tables by means of a smaller set of 'summary indices' that can be easily visualized and analyzed. It does and simplifies mathematical concepts such as standardization, covariance, eigenvectors and eigenvalues without focusing on how to compute them. One of its principal component is reduction of dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains the most information in large set. Hence it is an important approach to simplify the understanding about the dataset for machine learning. For more, [please click this link](https://builtin.com/data-science/step-step-explanation-principal-component-analysis)")
     st.markdown("Steps to compute PCA:")
     st.write("1. Standardization") 
@@ -1531,12 +1397,9 @@ with pca_data:
     st.write("4. Feature vector")
     st.write("5. Recast the data along the principal components axes")
     st.markdown("For more details you can read an article written by Zakaria Jaadi(2001), [A Step-by-Step Explanation of Principal Component Analysis (PCA)(https://builtin.com/data-science/step-step-explanation-principal-component-analysis)]. He has elaborated each steps in detail. ")
-
     st.header("Extraction of Features of Contribution")
     st.subheader("Best Features Extraction")
-    if classifier_name == "Random Forest Regressor":
-
-        
+    if classifier_name == "Random Forest Regressor":        
         if dataset_name == "Dolphins":
             #categorical features
             categorical_features = X.select_dtypes(include=['object']).columns
@@ -1549,16 +1412,12 @@ with pca_data:
             #numerical features
             numerical_features = X.select_dtypes(exclude=['object']).columns
             st.write(numerical_features)
-
             #all features of interest
-
             all_features = list(onehot_features) + list(numerical_features)
-            st.write(all_features)
-                
+            st.write(all_features)               
             #importance = pipe.named_steps['model'].feature_importances
             importance = permutation_importance(pipe, X_test, y_test).importances_mean
             st.write(importance)    
-
             zipped = zip(all_features, importance)
             df = pd.DataFrame(zipped, columns=["all_features", "importance"])
             df = df.sort_values("importance", ascending=False)
@@ -1571,101 +1430,73 @@ with pca_data:
         else:
             #categorical features
             #onehot = OneHotEncoder(handle_unknown='ignore', sparse = False)
-            #onehot.fit(X)
-
-            
+            #onehot.fit(X)           
             numerical_features = X.select_dtypes(exclude=['object']).columns
             st.write(numerical_features)
-
             #all features of interest
-
             all_features = list(numerical_features)
-            st.write(all_features)
-                
+            st.write(all_features)                
             #importance = pipe.named_steps['model'].feature_importances
             importance = permutation_importance(pipe, X_test, y_test).importances_mean
             st.write(importance)    
-
             zipped = zip(all_features, importance)
             df = pd.DataFrame(zipped, columns=["all_features", "importance"])
             df = df.sort_values("importance", ascending=False)
             st.write(df)
-
             # Sort the features by the absolute value of their coefficient
-
             #Graphic representation
             fig = plt.figure()
             sns.barplot(y=df['all_features'], x=df['importance'], data=df)
             st.pyplot(fig)
-
     else:
             if dataset_name == "Dolphins":
                 #categorical features
                 categorical_features = X.select_dtypes(include=['object']).columns
                 st.write(categorical_features)
-
                 #onehot encoder
-
                 onehot_features = list(pipe.named_steps['preprocessor'].named_transformers_['data_cat'].named_steps['onehot'].get_feature_names_out(input_features=categorical_features))
                 st.write(onehot_features)
                 #numerical features
                 numerical_features = X.select_dtypes(exclude=['object']).columns
                 st.write(numerical_features)
-
                 #all features of interest
-
                 all_features = list(onehot_features) + list(numerical_features)
-                st.write(all_features)
-                    
+                st.write(all_features)                    
                 importance = permutation_importance(pipe, X_test, y_test, scoring='accuracy').importances_mean
                 st.write(importance)    
-
                 zipped = zip(all_features, importance)
                 df = pd.DataFrame(zipped, columns=["all_features", "importance"])
                 df = df.sort_values("importance", ascending=False)
-
                 # Sort the features by the absolute value of their coefficient
-
                 #Graphic representation
                 fig = plt.figure()
                 sns.barplot(y=df["all_features"], x=df["importance"], data=df)
                 st.pyplot(fig)   
             else:
-                #categorical features
-                    
+                #categorical features                 
                 numerical_features = X.select_dtypes(exclude=['object']).columns
                 st.write(numerical_features)
-
                 #all features of interest
-
                 all_features = list(numerical_features)
-                st.write(all_features)
-                    
+                st.write(all_features)                   
                 importance = permutation_importance(pipe, X_test, y_test, scoring='accuracy').importances_mean
                 st.write(importance) 
-
                 zipped = zip(all_features, importance)
                 df = pd.DataFrame(zipped, columns=["all_features", "importance"])
                 df = df.sort_values("importance", ascending=False)
-
                 # Sort the features by the absolute value of their coefficient
-
                 #Graphic representation
                 fig = plt.figure()
                 sns.barplot(y=df["all_features"], x=df["importance"], data=df)
                 st.pyplot(fig)
-
 #------------------------------
 from sklearn.decomposition import PCA
-
 #if classifier_name == "Random Forest Classifier":
 df_reduced = PCA(n_components=2).fit_transform(X.dropna().select_dtypes(exclude=['object']))
 st.write(df_reduced)
-
 pca = PCA(n_components=2).fit(X.dropna().select_dtypes(exclude=['object']))
 st.write(pca.explained_variance_ratio_)
 #plotting scatter diagram
-
 st.subheader("Scatter plot of high dimensional data")
 st.write("The data input is tranformed X by PCA into df_reduced. Only the first two columns with most features importance are used for plotting 2D scatter")
 if dataset_name == "Dolphins":
