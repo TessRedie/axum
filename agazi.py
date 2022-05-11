@@ -98,7 +98,8 @@ with header:
     st.title("Machine Learning for Beginners")
     if about_project =="Summary of the Project":
         st.header("About the project")
-        st.write("In this ML project, I have tried to apply the skills I have learnt for the last 4 months. I believe that it will help for beginners. I have used public datasets. Originally from [Kaggle](https://www.kaggle.com/)Five datasets(Dolphins, Wine Quality, Iris, Breast cancer as well as Spam dataset) are used for training six models(SVM, KNN, Decision Tree Classifier, Gradient Boosting Classifier, Random Forest Classifier as well as Random Forest Regression). For every dataset, Explanatory Data Analysis(EDA), Data Visualization, Features engineering, model training and evaluations, as well as PCA are presented. It\'s my first experience.  Its purpose is mainly to share knowlegde and learn from the feedbacks. Therefore feel free to add your own inputs.")
+        st.write("In this ML project, I have tried to apply the skills I have learnt for the last 4 months at [Ecole Microsoft IA by Simplon Tours](https://www.leslogiciels.fr/article/erp/microsoft-france-inaugure-sa-premiere-ecole-ia-microsoft-by-simplon). I developed this website simply because I believe that it may help for people who are begining their journey in AI. To develop this application, I have used public datasets from [Kaggle](https://www.kaggle.com/). Five datasets(Dolphins, Wine Quality, Iris, Breast cancer as well as Spam dataset) are used for training six models(SVM, KNN, Decision Tree Classifier, Gradient Boosting Classifier, Random Forest Classifier as well as Random Forest Regression)")
+        st.write("For every dataset, Explanatory Data Analysis(EDA)), Data Visualization, Features engineering, model training and evaluations, as well as PCA are presented. It\'s my first experience.  Its purpose is mainly to share knowlegde and learn from the feedbacks. Therefore feel free to add your own inputs.")
     elif about_project == "Motivation":
         st.subheader("Motivation")
         st.write("You may wonder what motivates me to do this project, am I right? If so, this is a brief statement")
@@ -106,11 +107,11 @@ with header:
         st.write("Saying that, my motivation to join the AI domain though in a haphazard way, I believe that it is an ambitious dream of more than two decades search for knowledge and skills pertaining to my passion and curiousty of data and data use. It's based on this curiousity driven endeavour that I feel encouraged to develop this ML website to deepen my experience.I hope you will find it useful.")
 st.subheader("Steps")
 with dataset:
-    st.subheader("Step 1: Data Import")
-    st.markdown("To understand and get familiar  with the data at hand as well as to generate information, [exploratory data](https://www.redandyellow.co.za/blog/exploratory-vs-explanatory-data-analysis/) analysis is implemented. These include:")
-    st.write("The data of each dataset obtained from kaggle is saved on my github by commiting in a new resipotory created for this project. I found this to be more easy and practical than storing it in any other database cloud. It is public and can be accissible by [clicking here](https://github.com/TessRedie/axum).")
-    st.write("To upload the data, first click on the dataset you select. Then, show the raw data. From there a link will be provided which can be used as a url.")
-    st.code('''Example: With dataset:url = https://raw.githubusercontent.com/TessRedie/axum/master/dolphins.csv''',language='python')
+    st.subheader("Step 1: Data Discovery")
+    st.markdown("To understand and get familiar  with the data at hand as well as to generate information necessary for model training, [exploratory data](https://www.redandyellow.co.za/blog/exploratory-vs-explanatory-data-analysis/) analysis is implemented. These include:")
+    st.write("The data of each dataset obtained from kaggle is saved on my github by committing in a new resipotory created for this project. As a beginner, I found this to be more easy and practical. It's public and is accessible [here](https://github.com/TessRedie/axum).")
+    st.write("To upload the data, the required dataset was selected. Then, show the raw data. From there a link will be provided which can be used as a url.")
+    st.code('''Example: url = https://raw.githubusercontent.com/TessRedie/axum/master/dolphins.csv''',language='python')
     if dataset_name == "Dolphins":
         st.markdown("**1. Dolphins Dataset**")
         htp = "https://user-images.githubusercontent.com/95612783/167320127-6a81873a-655a-4c7f-a852-a45b34ac7c1c.png"
