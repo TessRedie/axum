@@ -62,7 +62,6 @@ from multiprocessing import Pipe
 from telnetlib import SB
 from typing import Container, Text
 from xml.etree.ElementInclude import include
-%matplotlib inline
 
 #containers
 
