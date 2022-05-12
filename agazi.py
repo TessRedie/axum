@@ -84,7 +84,7 @@ st.sidebar.subheader("Developer Profile")
 st.sidebar.subheader("Tesfabirhan W. REDIE")
 htp = "https://user-images.githubusercontent.com/95612783/167319949-6be62766-3d49-493e-bcb0-d5d70a932aa0.png"
 st.sidebar.image(htp, width=None)
-st.sidebar.write("oining to the Artificial Intelligence(AI) profession currently, I'm  always passionate by R&D. With a strong background in engineering, I have keen interest to work with Data. I believe that I have good capacity to integrate, adapt and intervene. I like to share ideas and propose solutions. Efficient in group work, as well as in autonomy, I am logical in my approach.", align_text='center')
+st.sidebar.write("Joining to the Artificial Intelligence(AI) profession currently, I'm  always passionate by R&D. With a strong background in engineering, I have keen interest to work with Data. I believe that I have good capacity to integrate, adapt and intervene. I like to share ideas and propose solutions. Efficient in group work, as well as in autonomy, I am logical in my approach.", align_text='center')
 #------------------------------------------
 about_project = st.sidebar.selectbox("About the Project", ("Summary of the Project", "Motivation"))
 st.sidebar.header("Select Dataset Type")
