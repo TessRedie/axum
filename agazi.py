@@ -84,7 +84,7 @@ st.sidebar.subheader("Developer Profile")
 st.sidebar.subheader("Tesfabirhan W. REDIE")
 htp = "https://user-images.githubusercontent.com/95612783/167319949-6be62766-3d49-493e-bcb0-d5d70a932aa0.png"
 st.sidebar.image(htp, width=None)
-st.sidebar.write("Joining to the Artificial Intelligence(AI) profession lately, I'm currenly studying Artificial Intelligence Development Application development, thanks to Greta Val-de-Loire and my school, Ecole Microsoft IA by Simplon. Always passionate by R&D, Studies, Data and Application Development, I believe that I have great capacity to integrate, intervene, strong in proposing, efficient in group work as well as love being in autonomy.", align_text='center')
+st.sidebar.write("oining to the Artificial Intelligence(AI) profession currently, I'm  always passionate by R&D. With a strong background in engineering, I have keen interest to work with Data. I believe that I have good capacity to integrate, adapt and intervene. I like to share ideas and propose solutions. Efficient in group work, as well as in autonomy, I am logical in my approach.", align_text='center')
 #------------------------------------------
 about_project = st.sidebar.selectbox("About the Project", ("Summary of the Project", "Motivation"))
 st.sidebar.header("Select Dataset Type")
@@ -881,6 +881,7 @@ with Preprocessing:
         #spams['clean_text'].head()
         #split words to columns
         splitwords = [nltk.word_tokenize(str(sentence)) for sentence in clean_spam1]
+        st.write("Split words", splitwords)
         #splitwords
         st.subheader("Word Cloud Vizualisation")      
         #Libraries
@@ -899,7 +900,6 @@ with Preprocessing:
         #char_length
         char_length =clean_spam1.apply(len)
         #word cloud
-        st.subheader("Word Cloud visualization")
         df = data
         column = clean_spam1
         numWords = counts
@@ -969,7 +969,7 @@ with Preprocessing:
         st.write("Spam dataset")
 
         df_spam = data.loc[data['Label']=='spam', :]
-        st.write("spam Dataset Shape:", df_spam.shape)
+        st.write("spam Dataset for modeling:", df_spam)
 
         #Filtering Ham dataset
         st.write("Ham Dataset")
@@ -1498,7 +1498,7 @@ pca = PCA(n_components=2).fit(X.dropna().select_dtypes(exclude=['object']))
 st.write(pca.explained_variance_ratio_)
 #plotting scatter diagram
 st.subheader("Scatter plot of high dimensional data")
-st.write("The data input is tranformed X by PCA into df_reduced. Only the first two columns with most features importance are used for plotting 2D scatter")
+st.write("The data input X is tranformed by PCA into df_reduced. Only the first two columns with most features importance are used for plotting 2D scatter")
 if dataset_name == "Dolphins":
     fig = plt.figure(figsize=(14, 10))
     sns.scatterplot(x=df_reduced[:, 0], y=df_reduced[:, 1], hue = data.dropna()['variety'], s=30)
